@@ -18,6 +18,23 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\AVTmathLib.h" />
+    <ClInclude Include="src\basic_geometry.h" />
+    <ClInclude Include="src\cube.h" />
+    <ClInclude Include="src\VertexAttrDef.h" />
+    <ClInclude Include="src\vsShaderLib.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\AVTmathLib.cpp" />
+    <ClCompile Include="src\basic_geometry.cpp" />
+    <ClCompile Include="src\lightDemo.cpp" />
+    <ClCompile Include="src\vsShaderLib.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\shaders\pointlight.frag" />
+    <None Include="src\shaders\pointlight.vert" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{9F508C76-5B3B-48B3-A88B-2AF49E3055F1}</ProjectGuid>
@@ -77,6 +94,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)dependencies/freeglut/include/;$(SolutionDir)dependencies/glew/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -95,6 +113,7 @@ xcopy "$(SolutionDir)dependencies\glew\bin\Release\$(Platform)\*.dll" "$(OutputP
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)dependencies/freeglut/include/;$(SolutionDir)dependencies/glew/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -115,6 +134,7 @@ xcopy "$(SolutionDir)dependencies\glew\bin\Release\$(Platform)\*.dll" "$(OutputP
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)dependencies/freeglut/include/;$(SolutionDir)dependencies/glew/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -137,6 +157,7 @@ xcopy "$(SolutionDir)dependencies\glew\bin\Release\$(Platform)\*.dll" "$(OutputP
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)dependencies/freeglut/include/;$(SolutionDir)dependencies/glew/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -150,12 +171,6 @@ xcopy "$(SolutionDir)dependencies\glew\bin\Release\$(Platform)\*.dll" "$(OutputP
 xcopy "$(SolutionDir)dependencies\glew\bin\Release\$(Platform)\*.dll" "$(OutputPath)" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="src\cube.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\Enunciado_exercise1.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
