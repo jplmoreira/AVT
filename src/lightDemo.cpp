@@ -58,9 +58,7 @@ GLint normal_uniformId;
 GLint lPos_uniformId;
 	
 // Camera Position
-float camX = 5.0f;
-float camY = 0.0f;
-float camZ = 5.0f;
+float camX, camY, camZ;
 
 // Mouse Tracking Variables
 int startX, startY, tracking = 0;
@@ -192,18 +190,18 @@ void processKeys(unsigned char key, int xx, int yy)
 			break;
         case 'q':
             camX = 5.0f;
-            camY = 0.0f;
-            camZ = 5.0f;
+            camY = 5.0f;
+            camZ = 0.0f;
             break;
         case 'w':
             camX = -2.5f;
-            camY = 2.5f;
-            camZ = 5.0f;
+            camY = 5.0f;
+            camZ = 2.5f;
             break;
         case 'e':
             camX = -2.5f;
-            camY = -2.5f;
-            camZ = 5.0f;
+            camY = 5.0f;
+            camZ = -2.5f;
             break;
 		case 'c': 
 			printf("Camera Spherical Coordinates (%f, %f, %f)\n", alpha, beta, r);
@@ -343,9 +341,12 @@ GLuint setupShaders() {
 void init()
 {
 	// set the camera position based on its spherical coordinates
-	camX = r * sin(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);
+	/*camX = r * sin(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);
 	camZ = r * cos(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);
-	camY = r *   						     sin(beta * 3.14f / 180.0f);
+	camY = r *   						     sin(beta * 3.14f / 180.0f);*/
+    camX = 5.0f;
+    camY = 5.0f;
+    camZ = 0.0f;
 
 	
 	float amb[]= {0.2f, 0.15f, 0.1f, 1.0f};
