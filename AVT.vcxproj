@@ -32,8 +32,8 @@
     <ClCompile Include="src\vsShaderLib.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\shaders\pointlight.frag" />
-    <None Include="src\shaders\pointlight.vert" />
+    <None Include="shaders\pointlight.frag" />
+    <None Include="shaders\pointlight.vert" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

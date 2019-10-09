@@ -46,10 +46,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\shaders\pointlight.frag">
+    <None Include="shaders\pointlight.frag">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="src\shaders\pointlight.vert">
+    <None Include="shaders\pointlight.vert">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
