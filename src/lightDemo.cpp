@@ -58,7 +58,9 @@ GLint normal_uniformId;
 GLint lPos_uniformId;
 	
 // Camera Position
-float camX, camY, camZ;
+float camX = 5.0f;
+float camY = 0.0f;
+float camZ = 5.0f;
 
 // Mouse Tracking Variables
 int startX, startY, tracking = 0;
@@ -188,7 +190,21 @@ void processKeys(unsigned char key, int xx, int yy)
 		case 27:
 			glutLeaveMainLoop();
 			break;
-
+        case 'q':
+            camX = 5.0f;
+            camY = 0.0f;
+            camZ = 5.0f;
+            break;
+        case 'w':
+            camX = -2.5f;
+            camY = 2.5f;
+            camZ = 5.0f;
+            break;
+        case 'e':
+            camX = -2.5f;
+            camY = -2.5f;
+            camZ = 5.0f;
+            break;
 		case 'c': 
 			printf("Camera Spherical Coordinates (%f, %f, %f)\n", alpha, beta, r);
 			break;
@@ -425,9 +441,9 @@ int main(int argc, char **argv) {
 
 //	Mouse and Keyboard Callbacks
 	glutKeyboardFunc(processKeys);
-	glutMouseFunc(processMouseButtons);
-	glutMotionFunc(processMouseMotion);
-	glutMouseWheelFunc ( mouseWheel ) ;
+	//glutMouseFunc(processMouseButtons);
+	//glutMotionFunc(processMouseMotion);
+	//glutMouseWheelFunc ( mouseWheel ) ;
 	
 
 
