@@ -134,7 +134,7 @@ void createCone(float height, float baseRadius, int sides) {
     p.push_back(-baseRadius);	p.push_back(0.0f);
     p.push_back(0.0f);			p.push_back(0.0f);
     p.push_back(baseRadius);	p.push_back(0.0f);
-    int max = (int)(1 + height / (baseRadius * 2 * 3.14159 / sides));
+    int max = (int)(1 + height / (baseRadius * 2.0f * 3.14159f / sides));
     for(int i = 0; i < max; ++i) {
 
         p.push_back(baseRadius - i * baseRadius / max); p.push_back(i * height / max);
