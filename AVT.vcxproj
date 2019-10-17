@@ -21,14 +21,21 @@
   <ItemGroup>
     <ClInclude Include="src\AVTmathLib.h" />
     <ClInclude Include="src\basic_geometry.h" />
+    <ClInclude Include="src\camera.hpp" />
     <ClInclude Include="src\cube.h" />
+    <ClInclude Include="src\mesh.hpp" />
+    <ClInclude Include="src\object.hpp" />
+    <ClInclude Include="src\scene_manager.hpp" />
     <ClInclude Include="src\VertexAttrDef.h" />
     <ClInclude Include="src\vsShaderLib.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AVTmathLib.cpp" />
     <ClCompile Include="src\basic_geometry.cpp" />
-    <ClCompile Include="src\lightDemo.cpp" />
+    <ClCompile Include="src\camera.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\object.cpp" />
+    <ClCompile Include="src\scene_manager.cpp" />
     <ClCompile Include="src\vsShaderLib.cpp" />
   </ItemGroup>
   <ItemGroup>
