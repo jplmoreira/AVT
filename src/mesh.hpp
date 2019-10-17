@@ -3,8 +3,6 @@
 #include <GL/glew.h>
 #include <GL/freeglut.h>
 
-#define MAX_TEXTURES 4
-
 struct material {
     float diffuse[4];
     float ambient[4];
@@ -15,6 +13,7 @@ struct material {
 };
 
 struct mesh {
+    static const int MAX_TEXTURES = 4;
     GLuint vao;
     GLuint texUnits[MAX_TEXTURES];
     GLuint texTypes[MAX_TEXTURES];

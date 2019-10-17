@@ -20,7 +20,7 @@ int WinX = 640, WinY = 480;
 
 unsigned int FrameCount = 0;
 
-float camX = 0.0f, camY = 10.0f, camZ = 0.0f;
+float camX = 0.0f, camY = 20.0f, camZ = 0.0f;
 float upX = 1.0f, upY = 0.0f, upZ = 0.0f;
 float atX = 0.0f, atY = 0.0f, atZ = 0.0f;
 
@@ -39,11 +39,6 @@ extern float mCompMatrix[COUNT_COMPUTED_MATRICES][16];
 /// The normal matrix
 extern float mNormal3x3[9];
 
-GLint pvm_uniformId;
-GLint vm_uniformId;
-GLint normal_uniformId;
-GLint lPos_uniformId;
-
 // Mouse Tracking Variables
 int startX, startY, tracking = 0;
 
@@ -54,7 +49,6 @@ float r = 10.0f;
 // Frame counting and FPS computation
 long myTime, timebase = 0, frame = 0;
 char s[32];
-float lightPos[4] = { 4.0f, 6.0f, 2.0f, 1.0f };
 
 void timer(int value) {
     std::ostringstream oss;
@@ -117,16 +111,37 @@ void processKeys(unsigned char key, int xx, int yy) {
         glutLeaveMainLoop();
         break;
     case '1':
-        camX = 0.0f;
-        camY = 10.0f;
-        camZ = 0.0f;
-        cam.move_to(camX, camY, camZ);
+        cam.move_to(0.0f, 20.0f, 0.0f);
+        break;
+    case 'q':
+        scene.player_forward();
+        break;
+    case 'a':
+        scene.player_back();
+        break;
+    case 'o':
+        scene.player_left();
+        break;
+    case 'p':
+        scene.player_right();
         break;
     case 'c':
         printf("Camera Spherical Coordinates (%f, %f, %f)\n", alpha, beta, r);
         break;
     case 'm': glEnable(GL_MULTISAMPLE); break;
     case 'n': glDisable(GL_MULTISAMPLE); break;
+    }
+}
+
+void processKeysUp(unsigned char key, int xx, int yy) {
+    switch(key) {
+
+    case 'q':
+    case 'a':
+    case 'o':
+    case 'p':
+        scene.player_stop();
+        break;
     }
 }
 
@@ -306,6 +321,7 @@ int main(int argc, char** argv) {
 
 //	Mouse and Keyboard Callbacks
     glutKeyboardFunc(processKeys);
+    glutKeyboardUpFunc(processKeysUp);
     glutMouseFunc(processMouseButtons);
     glutMotionFunc(processMouseMotion);
     glutMouseWheelFunc ( mouseWheel ) ;

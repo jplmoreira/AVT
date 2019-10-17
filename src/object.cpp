@@ -3,17 +3,27 @@
 #include "AVTmathLib.h"
 #include "camera.hpp"
 
+extern float mMatrix[COUNT_MATRICES][16];
 extern float mCompMatrix[COUNT_COMPUTED_MATRICES][16];
 extern float mNormal3x3[9];
 
 object::object(mesh m) : 
-    obj_mesh(m), dirx(0.0f), diry(0.0f), dirz(0.0f) {}
+    obj_mesh(m), dirx(0.0f), diry(0.0f), dirz(0.0f),
+    velocity(5.0f), last(std::chrono::system_clock::now()),
+    current(std::chrono::system_clock::now()) {}
 
 void object::add_child(std::unique_ptr<object> obj) {
     child_objs.push_back(std::move(obj));
 }
 
-void object::move() {}
+void object::move(float x, float y, float z) {
+    dirx = x;
+    diry = y;
+    dirz = z;
+
+    for(auto const& ptr : child_objs)
+        ptr->move(x, y, z);
+}
 
 void object::render(camera& cam, VSShaderLib& shader) {
     GLint loc;
@@ -26,8 +36,17 @@ void object::render(camera& cam, VSShaderLib& shader) {
     glUniform4fv(loc, 1, obj_mesh.mat.specular);
     loc = glGetUniformLocation(shader.getProgramIndex(), "mat.shininess");
     glUniform1f(loc, obj_mesh.mat.shininess);
+
+    current = std::chrono::system_clock::now();
+    std::chrono::duration<double> diff = current - last;
+    float delta = diff.count();
+
     pushMatrix(MODEL);
-    loadMatrix(MODEL, obj_mesh.transform);
+    //loadMatrix(MODEL, obj_mesh.transform);
+    translate(MODEL, dirx * delta * velocity,
+        diry * delta * velocity,
+        dirz * delta * velocity);
+    multMatrix(MODEL, obj_mesh.transform);
 
     // send matrices to OGL
     computeDerivedMatrix(PROJ_VIEW_MODEL);
@@ -46,7 +65,11 @@ void object::render(camera& cam, VSShaderLib& shader) {
     glDrawElements(obj_mesh.type, obj_mesh.numIndexes, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 
+    memcpy(obj_mesh.transform, mMatrix[MODEL], 16 * sizeof(float));
+
     popMatrix(MODEL);
+
+    last = std::chrono::system_clock::now();
 
     for(auto const& ptr : child_objs)
         ptr->render(cam, shader);

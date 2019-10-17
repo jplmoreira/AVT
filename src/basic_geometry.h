@@ -1,5 +1,3 @@
-#define MAX_TEXTURES 4
-
 #include "mesh.hpp"
 
 mesh createCube();

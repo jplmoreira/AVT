@@ -88,3 +88,23 @@ void scene_manager::prepare_scene() {
     auto floor = std::make_unique<object>(m3);
     objs.push_back(std::move(floor));
 }
+
+void scene_manager::player_forward() {
+    objs[0]->move(1.0f, 0.0f, 0.0f);
+}
+
+void scene_manager::player_back() {
+    objs[0]->move(-1.0f, 0.0f, 0.0f);
+}
+
+void scene_manager::player_right() { 
+    objs[0]->move(0.0f, 0.0f, 1.0f); 
+}
+
+void scene_manager::player_left() {
+    objs[0]->move(0.0f, 0.0f, -1.0f);
+}
+
+void scene_manager::player_stop() {
+    objs[0]->move(0.0f, 0.0f, 0.0f);
+}
