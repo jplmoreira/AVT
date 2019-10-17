@@ -15,4 +15,5 @@ public:
     void player_right();
     void player_left();
     void player_stop();
+    float* player_pos();
 };

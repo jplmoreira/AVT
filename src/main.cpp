@@ -110,15 +110,31 @@ void processKeys(unsigned char key, int xx, int yy) {
         glutLeaveMainLoop();
         break;
     case '1':
+    {
         cam.move_to(0.0f, 50.0f, 0.0f);
         cam.look(0.0f, 0.0f, 0.0f);
+        cam.set_up(1.0f, 0.0f, 0.0f);
         cam.make_ortho(true);
-        break;
+    }
+    break;
     case '2':
+    {
         cam.move_to(0.0f, 50.0f, 0.0f);
         cam.look(0.0f, 0.0f, 0.0f);
+        cam.set_up(1.0f, 0.0f, 0.0f);
         cam.make_ortho(false);
-        break;
+    }
+    break;
+    case '3':
+    {
+        float* player = scene.player_pos();
+        cam.move_to(player[0] - 20.0f, player[1] + 20.0f, player[2]);
+        cam.look(player[0], player[1], player[2]);
+        cam.set_up(0.0f, 1.0f, 0.0f);
+        cam.make_ortho(false);
+        cam.make_moving(true);
+    }
+    break;
     case 'q':
         scene.player_forward();
         break;

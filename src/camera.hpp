@@ -18,6 +18,7 @@ public:
     void resize(int w, int h);
     void look(float x, float y, float z);
     void move_to(float x, float y, float z);
+    void set_up(float x, float y, float z);
     void make_ortho(bool flag);
     void make_moving(bool flag);
     void draw(scene_manager& scene, VSShaderLib& shader);
@@ -26,6 +27,6 @@ public:
     GLint vm_uniformId = 0;
     GLint normal_uniformId = 0;
     GLint lPos_uniformId = 0;
-    bool is_ortho = false;
+    bool is_ortho = true;
     bool moving = false;
 };

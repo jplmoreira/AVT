@@ -24,4 +24,10 @@ public:
 
     virtual void move(float x, float y, float z);
     virtual void render(camera& cam, VSShaderLib& shader);
+    virtual void render_child(camera& cam, VSShaderLib& shader, object& parent);
+
+    mesh get_mesh() const;
+    float posx = 0.0f;
+    float posy = 0.0f;
+    float posz = 0.0f;
 };

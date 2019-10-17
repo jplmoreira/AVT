@@ -108,3 +108,8 @@ void scene_manager::player_left() {
 void scene_manager::player_stop() {
     objs[0]->move(0.0f, 0.0f, 0.0f);
 }
+
+float* scene_manager::player_pos() {
+    float pos[3] = { objs[0]->posx, objs[0]->posy, objs[0]->posz };
+    return pos;
+}
