@@ -20,11 +20,12 @@ int WinX = 640, WinY = 480;
 
 unsigned int FrameCount = 0;
 
-float camX = 0.0f, camY = 20.0f, camZ = 0.0f;
+float fov = 53.13f;
+float camX = 0.0f, camY = 50.0f, camZ = 0.0f;
 float upX = 1.0f, upY = 0.0f, upZ = 0.0f;
 float atX = 0.0f, atY = 0.0f, atZ = 0.0f;
 
-camera cam = camera(camX, camY, camZ, upX, upY, upZ, atX, atY, atZ);
+camera cam = camera(WinX, WinY, fov, camX, camY, camZ, upX, upY, upZ, atX, atY, atZ);
 
 scene_manager scene;
 VSShaderLib shader;
@@ -79,9 +80,7 @@ void changeSize(int w, int h) {
     // set the viewport to be the entire window
     glViewport(0, 0, w, h);
     // set the projection matrix
-    ratio = (1.0f * w) / h;
-    loadIdentity(PROJECTION);
-    perspective(53.13f, ratio, 0.1f, 1000.0f);
+    cam.resize(w, h);
 }
 
 
@@ -111,7 +110,14 @@ void processKeys(unsigned char key, int xx, int yy) {
         glutLeaveMainLoop();
         break;
     case '1':
-        cam.move_to(0.0f, 20.0f, 0.0f);
+        cam.move_to(0.0f, 50.0f, 0.0f);
+        cam.look(0.0f, 0.0f, 0.0f);
+        cam.make_ortho(true);
+        break;
+    case '2':
+        cam.move_to(0.0f, 50.0f, 0.0f);
+        cam.look(0.0f, 0.0f, 0.0f);
+        cam.make_ortho(false);
         break;
     case 'q':
         scene.player_forward();
@@ -180,45 +186,46 @@ void processMouseButtons(int button, int state, int xx, int yy) {
 // Track mouse motion while buttons are pressed
 
 void processMouseMotion(int xx, int yy) {
+    if(cam.moving) {
+        int deltaX, deltaY;
+        float alphaAux = 0.0f, betaAux = 0.0f;
+        float rAux = 0.0f;
 
-    int deltaX, deltaY;
-    float alphaAux = 0.0f, betaAux = 0.0f;
-    float rAux = 0.0f;
+        deltaX = -xx + startX;
+        deltaY = yy - startY;
 
-    deltaX = -xx + startX;
-    deltaY = yy - startY;
-
-    // left mouse button: move camera
-    if(tracking == 1) {
+        // left mouse button: move camera
+        if(tracking == 1) {
 
 
-        alphaAux = alpha + deltaX;
-        betaAux = beta + deltaY;
+            alphaAux = alpha + deltaX;
+            betaAux = beta + deltaY;
 
-        if(betaAux > 85.0f)
-            betaAux = 85.0f;
-        else if(betaAux < -85.0f)
-            betaAux = -85.0f;
-        rAux = r;
+            if(betaAux > 85.0f)
+                betaAux = 85.0f;
+            else if(betaAux < -85.0f)
+                betaAux = -85.0f;
+            rAux = r;
+        }
+        // right mouse button: zoom
+        else if(tracking == 2) {
+
+            alphaAux = alpha;
+            betaAux = beta;
+            rAux = r + (deltaY * 0.01f);
+            if(rAux < 0.1f)
+                rAux = 0.1f;
+        }
+
+        camX = rAux * sin(alphaAux * 3.14f / 180.0f) * cos(betaAux * 3.14f / 180.0f);
+        camZ = rAux * cos(alphaAux * 3.14f / 180.0f) * cos(betaAux * 3.14f / 180.0f);
+        camY = rAux * sin(betaAux * 3.14f / 180.0f);
+
+        cam.move_to(camX, camY, camZ);
+
+        //  uncomment this if not using an idle or refresh func
+        //	glutPostRedisplay();
     }
-    // right mouse button: zoom
-    else if(tracking == 2) {
-
-        alphaAux = alpha;
-        betaAux = beta;
-        rAux = r + (deltaY * 0.01f);
-        if(rAux < 0.1f)
-            rAux = 0.1f;
-    }
-
-    camX = rAux * sin(alphaAux * 3.14f / 180.0f) * cos(betaAux * 3.14f / 180.0f);
-    camZ = rAux * cos(alphaAux * 3.14f / 180.0f) * cos(betaAux * 3.14f / 180.0f);
-    camY = rAux * sin(betaAux * 3.14f / 180.0f);
-
-    cam.move_to(camX, camY, camZ);
-
-    //  uncomment this if not using an idle or refresh func
-    //	glutPostRedisplay();
 }
 
 
@@ -324,7 +331,7 @@ int main(int argc, char** argv) {
     glutKeyboardUpFunc(processKeysUp);
     glutMouseFunc(processMouseButtons);
     glutMotionFunc(processMouseMotion);
-    glutMouseWheelFunc ( mouseWheel ) ;
+    //glutMouseWheelFunc ( mouseWheel ) ;
 
 //	return from main loop
     glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);

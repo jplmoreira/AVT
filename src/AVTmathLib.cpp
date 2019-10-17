@@ -222,7 +222,7 @@ void lookAt(float xPos, float yPos, float zPos,
     multMatrix(VIEW, m2);
 }
 
-// gluPerspective implementation
+// gluwpective implementation
 void perspective(float fov, float ratio, float nearp, float farp) {
     float projMatrix[16];
 
