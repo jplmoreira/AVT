@@ -115,6 +115,7 @@ void processKeys(unsigned char key, int xx, int yy) {
         cam.look(0.0f, 0.0f, 0.0f);
         cam.set_up(1.0f, 0.0f, 0.0f);
         cam.make_ortho(true);
+        cam.make_moving(false);
     }
     break;
     case '2':
@@ -123,6 +124,7 @@ void processKeys(unsigned char key, int xx, int yy) {
         cam.look(0.0f, 0.0f, 0.0f);
         cam.set_up(1.0f, 0.0f, 0.0f);
         cam.make_ortho(false);
+        cam.make_moving(false);
     }
     break;
     case '3':
