@@ -27,7 +27,9 @@
     <ClInclude Include="src\light.hpp" />
     <ClInclude Include="src\mesh.hpp" />
     <ClInclude Include="src\object.hpp" />
+    <ClInclude Include="src\point_light.hpp" />
     <ClInclude Include="src\scene_manager.hpp" />
+    <ClInclude Include="src\spot_light.hpp" />
     <ClInclude Include="src\VertexAttrDef.h" />
     <ClInclude Include="src\vsShaderLib.h" />
   </ItemGroup>
@@ -38,7 +40,9 @@
     <ClCompile Include="src\dir_light.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\object.cpp" />
+    <ClCompile Include="src\point_light.cpp" />
     <ClCompile Include="src\scene_manager.cpp" />
+    <ClCompile Include="src\spot_light.cpp" />
     <ClCompile Include="src\vsShaderLib.cpp" />
   </ItemGroup>
   <ItemGroup>

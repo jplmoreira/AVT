@@ -45,11 +45,11 @@ void main() {
 	for (int l = 0; l < MAXLIGHTS; ++l) {
         if (!lights[l].is_enabled) continue;
 
-        vec3 light_dir = lights[l].direction;
+        vec3 light_dir = lights[l].position;
         float attenuation = 0.5;
 
         if (lights[l].is_local) {
-            light_dir = lights[l].position - DataIn.o_pos;
+            light_dir -= DataIn.o_pos;
             float distance = length(light_dir);
             light_dir = normalize(light_dir);
 
@@ -68,7 +68,8 @@ void main() {
                     attenuation *= pow(spot_cos,
                                         lights[l].spot_exponent);
             }
-        }
+        } else
+            light_dir = normalize(light_dir);
 
         float diffuse = max(dot(light_dir, DataIn.normal), 0.0);
         float specular = 0.0;
@@ -80,12 +81,12 @@ void main() {
             specular = pow(spec_angle, mat.shininess);
         }
 
-        scattered += max(mat.ambient.rgb,
-                    diffuse * mat.diffuse.rgb * lights[l].color * attenuation);
+        scattered += mat.ambient.rgb +
+                    diffuse * mat.diffuse.rgb * lights[l].color * attenuation;
 
         reflected += specular * mat.specular.rgb * lights[l].color * attenuation;
     }
-    vec3 res = min(vec3(1.0), scattered + reflected * 0.2);
+    vec3 res = min(vec3(1.0), scattered + reflected);
 	
 	colorOut = vec4(res, 1.0);
 }

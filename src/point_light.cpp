@@ -1,8 +1,7 @@
-#include "dir_light.hpp"
-#include "AVTmathLib.h"
+#include "point_light.hpp"
 
-void dir_light::setup(GLuint program, float* player) {
-    GLint uniform_id = glGetUniformLocation(program, 
+void point_light::setup(GLuint program, float* player) {
+    GLint uniform_id = glGetUniformLocation(program,
         ("lights[" + std::to_string(id) + "].is_enabled").c_str());
     glUniform1i(uniform_id, is_enabled);
 

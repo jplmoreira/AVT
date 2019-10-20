@@ -68,7 +68,7 @@ void camera::draw(scene_manager& scene, VSShaderLib& shader) {
     glUseProgram(shader.getProgramIndex());
 
     for(auto const& l : scene.lights)
-        l->setup(shader.getProgramIndex());
+        l->setup(shader.getProgramIndex(), scene.player_pos());
 
     for(auto const& ptr : scene.objs)
         ptr->render(*this, shader);

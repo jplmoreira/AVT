@@ -11,9 +11,9 @@ public:
         is_enabled = enabled;
         is_local = false;
         is_spot = false;
-        this->dir[0] = dir[0];
-        this->dir[1] = dir[1];
-        this->dir[2] = dir[2];
+        this->position[0] = dir[0];
+        this->position[1] = dir[1];
+        this->position[2] = dir[2];
         spot_cutoff = 0.0f;
         spot_exponent = 0.0f;
         constant_attenuation = 0.0f;
@@ -21,5 +21,5 @@ public:
         quadratic_attenuation = 0.0f;
     }
 
-    virtual void setup(GLuint program);
+    virtual void setup(GLuint program, float* player);
 };

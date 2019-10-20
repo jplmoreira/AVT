@@ -105,7 +105,6 @@ void renderScene(void) {
 
 void processKeys(unsigned char key, int xx, int yy) {
     switch(key) {
-
     case 27:
         glutLeaveMainLoop();
         break;
@@ -159,7 +158,6 @@ void processKeys(unsigned char key, int xx, int yy) {
 
 void processKeysUp(unsigned char key, int xx, int yy) {
     switch(key) {
-
     case 'q':
     case 'a':
     case 'o':

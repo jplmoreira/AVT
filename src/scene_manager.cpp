@@ -1,6 +1,6 @@
 #include "scene_manager.hpp"
 
-#include "dir_light.hpp"
+#include "spot_light.hpp"
 #include "mesh.hpp"
 #include "basic_geometry.h"
 #include "AVTmathLib.h"
@@ -11,8 +11,8 @@ void scene_manager::prepare_scene() {
     // OBJECT CREATION
     loadIdentity(MODEL);
 
-    float amb1[] = { 0.15f, 1.0f, 0.5f, 1.0f };
-    float diff1[] = { 0.2f, 1.0f, 0.5f, 1.0f };
+    float amb1[] = { 0.0f, 0.2f, 0.0f, 1.0f };
+    float diff1[] = { 0.0f, 0.8f, 0.1f, 1.0f };
     float spec1[] = { 0.8f, 0.8f, 0.8f, 1.0f };
     float emissive1[] = { 0.0f, 0.0f, 0.0f, 1.0f };
     float shininess1 = 100.0f;
@@ -66,8 +66,8 @@ void scene_manager::prepare_scene() {
     frog->add_child(std::move(l_eye));
     objs.push_back(std::move(frog));
 
-    float amb3[] = { 0.2f, 0.15f, 0.1f, 1.0f };
-    float diff3[] = { 0.8f, 0.6f, 0.4f, 1.0f };
+    float amb3[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+    float diff3[] = { 0.2f, 0.2f, 0.2f, 1.0f };
     float spec3[] = { 0.8f, 0.8f, 0.8f, 1.0f };
 
     material mat3;
@@ -77,7 +77,7 @@ void scene_manager::prepare_scene() {
     memcpy(mat3.emissive, emissive1, 4 * sizeof(float));
     mat3.shininess = shininess1;
     mat3.texCount = texcount1;
-    mesh m3 = createQuad(10.0f, 10.0f);
+    mesh m3 = createQuad(50.0f, 50.0f);
     m3.mat = mat3;
 
     pushMatrix(MODEL);
@@ -92,11 +92,12 @@ void scene_manager::prepare_scene() {
     // LIGHT CREATION
     int lightId = 0;
 
-    float dir[3] = { -5.0f, 10.0f, 0.0f };
-    auto light = std::make_unique<dir_light>(lightId, true, dir);
-    light->color[0] = 0.5f;
-    light->color[1] = 0.5f;
-    light->color[2] = 0.5f;
+    float pos[3] = { 1.0f, 1.0f, 0.0f };
+    float dir[3] = { -1.0f, 2.0f, 0.0f };  // something is wrong here
+    auto light = std::make_unique<spot_light>(lightId, true, pos, dir);
+    light->color[0] = 0.8f;
+    light->color[1] = 0.8f;
+    light->color[2] = 0.8f;
 
     lights.push_back(std::move(light));
 

@@ -16,5 +16,5 @@ struct light {
     float linear_attenuation;
     float quadratic_attenuation;
 
-    virtual void setup(GLuint program) = 0;
+    virtual void setup(GLuint program, float* player) = 0;
 };
