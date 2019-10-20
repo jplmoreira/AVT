@@ -23,6 +23,8 @@
     <ClInclude Include="src\basic_geometry.h" />
     <ClInclude Include="src\camera.hpp" />
     <ClInclude Include="src\cube.h" />
+    <ClInclude Include="src\dir_light.hpp" />
+    <ClInclude Include="src\light.hpp" />
     <ClInclude Include="src\mesh.hpp" />
     <ClInclude Include="src\object.hpp" />
     <ClInclude Include="src\scene_manager.hpp" />
@@ -33,6 +35,7 @@
     <ClCompile Include="src\AVTmathLib.cpp" />
     <ClCompile Include="src\basic_geometry.cpp" />
     <ClCompile Include="src\camera.cpp" />
+    <ClCompile Include="src\dir_light.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\object.cpp" />
     <ClCompile Include="src\scene_manager.cpp" />

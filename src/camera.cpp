@@ -67,14 +67,8 @@ void camera::draw(scene_manager& scene, VSShaderLib& shader) {
     // use our shader
     glUseProgram(shader.getProgramIndex());
 
-    //send the light position in eye coordinates
-
-    //efeito capacete do mineiro, ou seja lighPos foi definido em eye coord 
-    //glUniform4fv(lPos_uniformId, 1, lightPos);
-
-    float res[4];
-    multMatrixPoint(VIEW, lightPos, res);   //lightPos definido em World Coord so is converted to eye space
-    glUniform4fv(lPos_uniformId, 1, res);
+    for(auto const& l : scene.lights)
+        l->setup(shader.getProgramIndex());
 
     for(auto const& ptr : scene.objs)
         ptr->render(*this, shader);

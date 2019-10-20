@@ -287,7 +287,7 @@ GLuint setupShaders() {
     cam.pvm_uniformId = glGetUniformLocation(shader.getProgramIndex(), "m_pvm");
     cam.vm_uniformId = glGetUniformLocation(shader.getProgramIndex(), "m_viewModel");
     cam.normal_uniformId = glGetUniformLocation(shader.getProgramIndex(), "m_normal");
-    cam.lPos_uniformId = glGetUniformLocation(shader.getProgramIndex(), "l_pos");
+    //cam.lPos_uniformId = glGetUniformLocation(shader.getProgramIndex(), "l_pos");
 
     printf("InfoLog for Per Fragment Phong Lightning Shader\n%s\n\n", shader.getAllInfoLogs().c_str());
 

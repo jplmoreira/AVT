@@ -4,10 +4,12 @@
 #include <memory>
 
 #include "object.hpp"
+#include "light.hpp"
 
 class scene_manager {
 public:
     std::vector<std::unique_ptr<object>> objs;
+    std::vector<std::unique_ptr<light>> lights;
 
     void prepare_scene();
     void player_forward();

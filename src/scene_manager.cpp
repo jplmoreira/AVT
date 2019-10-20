@@ -1,5 +1,6 @@
 #include "scene_manager.hpp"
 
+#include "dir_light.hpp"
 #include "mesh.hpp"
 #include "basic_geometry.h"
 #include "AVTmathLib.h"
@@ -7,7 +8,7 @@
 extern float mMatrix[COUNT_MATRICES][16];
 
 void scene_manager::prepare_scene() {
-
+    // OBJECT CREATION
     loadIdentity(MODEL);
 
     float amb1[] = { 0.15f, 1.0f, 0.5f, 1.0f };
@@ -87,6 +88,19 @@ void scene_manager::prepare_scene() {
 
     auto floor = std::make_unique<object>(m3);
     objs.push_back(std::move(floor));
+
+    // LIGHT CREATION
+    int lightId = 0;
+
+    float dir[3] = { -5.0f, 10.0f, 0.0f };
+    auto light = std::make_unique<dir_light>(lightId, true, dir);
+    light->color[0] = 0.5f;
+    light->color[1] = 0.5f;
+    light->color[2] = 0.5f;
+
+    lights.push_back(std::move(light));
+
+    lightId++;
 }
 
 void scene_manager::player_forward() {
