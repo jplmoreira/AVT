@@ -18,12 +18,16 @@ void camera::resize(int width, int height) {
 
 void camera::look(float x, float y, float z) {
     atx = x; aty = y; atz = z;
+
+	
 }
 
 void camera::move_to(float tox, float toy, float toz) {
     x = tox;
+	
     y = toy;
     z = toz;
+
 }
 
 void camera::set_up(float x, float y, float z) {
@@ -55,6 +59,7 @@ void camera::draw(scene_manager& scene, VSShaderLib& shader) {
     // set the camera using a function similar to gluLookAt
     if(moving) {
         float* player = scene.player_pos();
+		
         x = player[0] - 20.0f;
         y = player[1] + 20.0f;
         z = player[2];
@@ -67,8 +72,14 @@ void camera::draw(scene_manager& scene, VSShaderLib& shader) {
     // use our shader
     glUseProgram(shader.getProgramIndex());
 
-    for(auto const& l : scene.lights)
-        l->setup(shader.getProgramIndex(), scene.player_pos());
+    //send the light position in eye coordinates
+
+    //efeito capacete do mineiro, ou seja lighPos foi definido em eye coord 
+    //glUniform4fv(lPos_uniformId, 1, lightPos);
+
+    float res[4];
+    multMatrixPoint(VIEW, lightPos, res);   //lightPos definido em World Coord so is converted to eye space
+    glUniform4fv(lPos_uniformId, 1, res);
 
     for(auto const& ptr : scene.objs)
         ptr->render(*this, shader);

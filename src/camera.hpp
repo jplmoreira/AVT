@@ -9,6 +9,7 @@ class camera {
     float x, y, z;
     float upx, upy, upz;
     float atx, aty, atz;
+    float lightPos[4] = { 4.0f, 6.0f, 2.0f, 1.0f };
 
 public:
     camera(int w, int h, float fov, float x, float y, float z,
@@ -25,6 +26,7 @@ public:
     GLint pvm_uniformId = 0;
     GLint vm_uniformId = 0;
     GLint normal_uniformId = 0;
+    GLint lPos_uniformId = 0;
     bool is_ortho = true;
     bool moving = false;
 };

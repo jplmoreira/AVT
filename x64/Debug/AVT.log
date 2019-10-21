@@ -1,0 +1,64 @@
+﻿  AVTmathLib.cpp
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\AVTmathLib.cpp(142,14): warning C4244: 'initialisation' : conversion de 'double' en 'float', perte possible de données
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\AVTmathLib.cpp(143,14): warning C4244: 'initialisation' : conversion de 'double' en 'float', perte possible de données
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\AVTmathLib.cpp(229,13): warning C4244: 'initialisation' : conversion de 'double' en 'float', perte possible de données
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\AVTmathLib.cpp(345,15): warning C4244: 'initialisation' : conversion de 'double' en 'float', perte possible de données
+  basic_geometry.cpp
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\AVTmathLib.cpp(371,16): warning C4244: 'return' : conversion de 'double' en 'float', perte possible de données
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\basic_geometry.cpp(166,72): warning C4267: 'argument' : conversion de 'size_t' en 'int', perte possible de données
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\basic_geometry.cpp(288,57): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\basic_geometry.cpp(290,61): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\basic_geometry.cpp(293,63): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\basic_geometry.cpp(295,67): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\basic_geometry.cpp(311,65): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\basic_geometry.cpp(313,69): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\basic_geometry.cpp(316,77): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\basic_geometry.cpp(318,81): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\basic_geometry.cpp(428,16): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\basic_geometry.cpp(436,16): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\basic_geometry.cpp(456,16): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\basic_geometry.cpp(477,54): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+  camera.cpp
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\basic_geometry.cpp(478,58): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\camera.cpp(38,43): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\camera.cpp(38,35): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\camera.cpp(38,26): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
+  main.cpp
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\camera.cpp(38,18): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
+  object.cpp
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\main.cpp(76,11): warning C4101: 'ratio' : variable locale non référencée
+  scene_manager.cpp
+  vsShaderLib.cpp
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\object.cpp(39,17): warning C4244: 'initialisation' : conversion de '_Rep' en 'float', perte possible de données
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\object.cpp(39,17): warning C4244:         with
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\object.cpp(39,17): warning C4244:         [
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\object.cpp(39,17): warning C4244:             _Rep=double
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\object.cpp(39,17): warning C4244:         ]
+  Génération de code en cours...
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\vsShaderLib.cpp(569,49): warning C4267: '=' : conversion de 'size_t' en 'int', perte possible de données
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\scene_manager.cpp(114): warning C4172: retourne l'adresse d'une variable locale ou : pos temporaire
+main.obj : error LNK2019: symbole externe non résolu __imp_glutInitWindowPosition référencé dans la fonction main
+main.obj : error LNK2019: symbole externe non résolu __imp_glutInitWindowSize référencé dans la fonction main
+main.obj : error LNK2019: symbole externe non résolu __imp_glutInitDisplayMode référencé dans la fonction main
+main.obj : error LNK2019: symbole externe non résolu __imp_glutMainLoop référencé dans la fonction main
+main.obj : error LNK2019: symbole externe non résolu __imp_glutSetWindow référencé dans la fonction "void __cdecl timer(int)" (?timer@@YAXH@Z)
+main.obj : error LNK2019: symbole externe non résolu __imp_glutSetWindowTitle référencé dans la fonction "void __cdecl timer(int)" (?timer@@YAXH@Z)
+main.obj : error LNK2019: symbole externe non résolu __imp_glutPostRedisplay référencé dans la fonction "void __cdecl refresh(int)" (?refresh@@YAXH@Z)
+main.obj : error LNK2019: symbole externe non résolu __imp_glutSwapBuffers référencé dans la fonction "void __cdecl renderScene(void)" (?renderScene@@YAXXZ)
+main.obj : error LNK2019: symbole externe non résolu __imp_glutTimerFunc référencé dans la fonction "void __cdecl refresh(int)" (?refresh@@YAXH@Z)
+main.obj : error LNK2019: symbole externe non résolu __imp_glutIdleFunc référencé dans la fonction main
+main.obj : error LNK2019: symbole externe non résolu __imp_glutKeyboardFunc référencé dans la fonction main
+main.obj : error LNK2019: symbole externe non résolu __imp_glutReshapeFunc référencé dans la fonction main
+main.obj : error LNK2019: symbole externe non résolu __imp_glutDisplayFunc référencé dans la fonction main
+main.obj : error LNK2019: symbole externe non résolu __imp_glutMouseFunc référencé dans la fonction main
+main.obj : error LNK2019: symbole externe non résolu __imp_glutMotionFunc référencé dans la fonction main
+main.obj : error LNK2019: symbole externe non résolu __imp_glutKeyboardUpFunc référencé dans la fonction main
+main.obj : error LNK2019: symbole externe non résolu __imp___glutInitWithExit référencé dans la fonction glutInit_ATEXIT_HACK
+main.obj : error LNK2019: symbole externe non résolu __imp___glutCreateWindowWithExit référencé dans la fonction glutCreateWindow_ATEXIT_HACK
+main.obj : error LNK2019: symbole externe non résolu __imp_glutLeaveMainLoop référencé dans la fonction "void __cdecl processKeys(unsigned char,int,int)" (?processKeys@@YAXEHH@Z)
+main.obj : error LNK2019: symbole externe non résolu __imp_glutSetOption référencé dans la fonction main
+main.obj : error LNK2019: symbole externe non résolu __imp_glutInitContextVersion référencé dans la fonction main
+main.obj : error LNK2019: symbole externe non résolu __imp_glutInitContextFlags référencé dans la fonction main
+main.obj : error LNK2019: symbole externe non résolu __imp_glutInitContextProfile référencé dans la fonction main
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\dependencies\freeglut\lib\\freeglut.lib : warning LNK4272: type d'ordinateur bibliothèque 'x86' en conflit avec le type d'ordinateur cible 'x64'
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\x64\Debug\AVT.exe : fatal error LNK1120: 23 externes non résolus

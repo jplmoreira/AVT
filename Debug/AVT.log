@@ -1,0 +1,25 @@
+﻿  camera.cpp
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\camera.cpp(42,43): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\camera.cpp(42,35): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\camera.cpp(42,26): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
+  main.cpp
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\camera.cpp(42,18): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\main.cpp(76,11): warning C4101: 'ratio' : variable locale non référencée
+  object.cpp
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\main.cpp(92,5): warning C4804: '<' : utilisation risquée du type 'bool' dans l'opération
+  scene_manager.cpp
+  Génération de code en cours...
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\object.cpp(39,17): warning C4244: 'initialisation' : conversion de '_Rep' en 'float', perte possible de données
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\object.cpp(39,17): warning C4244:         with
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\object.cpp(39,17): warning C4244:         [
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\object.cpp(39,17): warning C4244:             _Rep=double
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\object.cpp(39,17): warning C4244:         ]
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\scene_manager.cpp(209): warning C4172: retourne l'adresse d'une variable locale ou : pos temporaire
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\scene_manager.cpp(214): warning C4172: retourne l'adresse d'une variable locale ou : pos temporaire
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\scene_manager.cpp(233): warning C4172: retourne l'adresse d'une variable locale ou : pos temporaire
+C:\Users\utilisateur\Desktop\AVT-2\AVT-master\src\scene_manager.cpp(238): warning C4172: retourne l'adresse d'une variable locale ou : pos temporaire
+  AVT.vcxproj -> C:\Users\utilisateur\Desktop\AVT-2\AVT-master\Debug\AVT.exe
+  C:\Users\utilisateur\Desktop\AVT-2\AVT-master\dependencies\freeglut\bin\freeglut.dll
+  1 fichier(s) copié(s)
+  C:\Users\utilisateur\Desktop\AVT-2\AVT-master\dependencies\glew\bin\Release\Win32\glew32.dll
+  1 fichier(s) copié(s)

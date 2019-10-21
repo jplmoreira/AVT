@@ -83,10 +83,83 @@ void changeSize(int w, int h) {
     cam.resize(w, h);
 }
 
+int n = 0;
+void stuff_moving() {
+	float* e = scene.wood_pos();
+	float f = e[2];
+	int f_bis = (int)f;
+	float j = (float)WinY; 
+	if (0< f< j/15 &&n%2==0) {
+		scene.wood_move();
+		if (f_bis == 30) {
+			n++;
+		}
+	}
+	else {
+		scene.wood_inverse_move();
+		if (f_bis == -30) {
+			n++;
+		}
+		
+	}
+
+
+}
+
+
+void avoid_stuff_forward() {
+	/*float* river = scene.river_pos();
+	float riverx = river[0];
+	int river_bis = (int)riverx;
+	float* player = scene.player_pos();
+	float playerx = player[0];
+	printf("%i\n", river_bis);
+	int player_bis = (int)playerx;*/
+	//if (river_bis<player_bis) {
+		scene.player_forward();
+	//}
+	
+
+}
+
+void avoid_stuff_back() {
+	scene.player_back();
+}
+
+
+
+void move_l_limits() {
+	float* player = scene.player_pos();
+	float playery = player[2];
+	int player_bis = (int)playery;
+	//printf("%i\n", player_bis);
+	if (-30<player_bis && player_bis<31) {
+		scene.player_left();
+	}
+	else {
+		scene.player_stop();
+	}
+}
+
+void move_r_limits() {
+	float* player = scene.player_pos();
+	float playery = player[2];
+	int player_bis = (int)playery;
+	//printf("%i\n", player_bis);
+	if (-31 < player_bis && player_bis < 30) {
+		scene.player_right();
+	}
+	else {
+		scene.player_stop();
+	}
+
+}
+
+
 
 // ------------------------------------------------------------
 //
-// Render stufff
+// Render stuff
 //
 
 void renderScene(void) {
@@ -94,17 +167,22 @@ void renderScene(void) {
     FrameCount++;
 
     cam.draw(scene, shader);
+	stuff_moving();
+
 
     glutSwapBuffers();
+
+	
 }
 
 // ------------------------------------------------------------
 //
 // Events from the Keyboard
 //
-
 void processKeys(unsigned char key, int xx, int yy) {
+
     switch(key) {
+
     case 27:
         glutLeaveMainLoop();
         break;
@@ -128,7 +206,7 @@ void processKeys(unsigned char key, int xx, int yy) {
     break;
     case '3':
     {
-        float* player = scene.player_pos();
+		float* player = scene.player_pos();
         cam.move_to(player[0] - 20.0f, player[1] + 20.0f, player[2]);
         cam.look(player[0], player[1], player[2]);
         cam.set_up(0.0f, 1.0f, 0.0f);
@@ -137,16 +215,16 @@ void processKeys(unsigned char key, int xx, int yy) {
     }
     break;
     case 'q':
-        scene.player_forward();
+		avoid_stuff_forward();
         break;
     case 'a':
-        scene.player_back();
+		avoid_stuff_back();
         break;
     case 'o':
-        scene.player_left();
+		move_l_limits();
         break;
     case 'p':
-        scene.player_right();
+		move_r_limits();
         break;
     case 'c':
         printf("Camera Spherical Coordinates (%f, %f, %f)\n", alpha, beta, r);
@@ -156,8 +234,11 @@ void processKeys(unsigned char key, int xx, int yy) {
     }
 }
 
+
+
 void processKeysUp(unsigned char key, int xx, int yy) {
     switch(key) {
+
     case 'q':
     case 'a':
     case 'o':
@@ -173,93 +254,93 @@ void processKeysUp(unsigned char key, int xx, int yy) {
 // Mouse Events
 //
 
-void processMouseButtons(int button, int state, int xx, int yy) {
-    // start tracking the mouse
-    if(state == GLUT_DOWN) {
-        startX = xx;
-        startY = yy;
-        if(button == GLUT_LEFT_BUTTON)
-            tracking = 1;
-        else if(button == GLUT_RIGHT_BUTTON)
-            tracking = 2;
-    }
-
-    //stop tracking the mouse
-    else if(state == GLUT_UP) {
-        if(tracking == 1) {
-            alpha -= (xx - startX);
-            beta += (yy - startY);
-        }
-        else if(tracking == 2) {
-            r += (yy - startY) * 0.01f;
-            if(r < 0.1f)
-                r = 0.1f;
-        }
-        tracking = 0;
-    }
-}
-
-// Track mouse motion while buttons are pressed
-
-void processMouseMotion(int xx, int yy) {
-    if(cam.moving) {
-        int deltaX, deltaY;
-        float alphaAux = 0.0f, betaAux = 0.0f;
-        float rAux = 0.0f;
-
-        deltaX = -xx + startX;
-        deltaY = yy - startY;
-
-        // left mouse button: move camera
-        if(tracking == 1) {
-
-
-            alphaAux = alpha + deltaX;
-            betaAux = beta + deltaY;
-
-            if(betaAux > 85.0f)
-                betaAux = 85.0f;
-            else if(betaAux < -85.0f)
-                betaAux = -85.0f;
-            rAux = r;
-        }
-        // right mouse button: zoom
-        else if(tracking == 2) {
-
-            alphaAux = alpha;
-            betaAux = beta;
-            rAux = r + (deltaY * 0.01f);
-            if(rAux < 0.1f)
-                rAux = 0.1f;
-        }
-
-        camX = rAux * sin(alphaAux * 3.14f / 180.0f) * cos(betaAux * 3.14f / 180.0f);
-        camZ = rAux * cos(alphaAux * 3.14f / 180.0f) * cos(betaAux * 3.14f / 180.0f);
-        camY = rAux * sin(betaAux * 3.14f / 180.0f);
-
-        cam.move_to(camX, camY, camZ);
-
-        //  uncomment this if not using an idle or refresh func
-        //	glutPostRedisplay();
-    }
-}
-
-
-void mouseWheel(int wheel, int direction, int x, int y) {
-
-    r += direction * 0.1f;
-    if(r < 0.1f)
-        r = 0.1f;
-
-    camX = r * sin(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);
-    camZ = r * cos(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);
-    camY = r * sin(beta * 3.14f / 180.0f);
-
-    cam.move_to(camX, camY, camZ);
-
-    //  uncomment this if not using an idle or refresh func
-    //	glutPostRedisplay();
-}
+//void processMouseButtons(int button, int state, int xx, int yy) {
+//    // start tracking the mouse
+//    if(state == GLUT_DOWN) {
+//        startX = xx;
+//        startY = yy;
+//        if(button == GLUT_LEFT_BUTTON)
+//            tracking = 1;
+//        else if(button == GLUT_RIGHT_BUTTON)
+//            tracking = 2;
+//    }
+//
+//    //stop tracking the mouse
+//    else if(state == GLUT_UP) {
+//        if(tracking == 1) {
+//            alpha -= (xx - startX);
+//            beta += (yy - startY);
+//        }
+//        else if(tracking == 2) {
+//            r += (yy - startY) * 0.01f;
+//            if(r < 0.1f)
+//                r = 0.1f;
+//        }
+//        tracking = 0;
+//    }
+//}
+//
+//// Track mouse motion while buttons are pressed
+//
+//void processMouseMotion(int xx, int yy) {
+//    if(cam.moving) {
+//        int deltaX, deltaY;
+//        float alphaAux = 0.0f, betaAux = 0.0f;
+//        float rAux = 0.0f;
+//
+//        deltaX = -xx + startX;
+//        deltaY = yy - startY;
+//
+//        // left mouse button: move camera
+//        if(tracking == 1) {
+//
+//
+//            alphaAux = alpha + deltaX;
+//            betaAux = beta + deltaY;
+//
+//            if(betaAux > 85.0f)
+//                betaAux = 85.0f;
+//            else if(betaAux < -85.0f)
+//                betaAux = -85.0f;
+//            rAux = r;
+//        }
+//        // right mouse button: zoom
+//        else if(tracking == 2) {
+//
+//            alphaAux = alpha;
+//            betaAux = beta;
+//            rAux = r + (deltaY * 0.01f);
+//            if(rAux < 0.1f)
+//                rAux = 0.1f;
+//        }
+//
+//        camX = rAux * sin(alphaAux * 3.14f / 180.0f) * cos(betaAux * 3.14f / 180.0f);
+//        camZ = rAux * cos(alphaAux * 3.14f / 180.0f) * cos(betaAux * 3.14f / 180.0f);
+//        camY = rAux * sin(betaAux * 3.14f / 180.0f);
+//
+//        cam.move_to(camX, camY, camZ);
+//
+//        //  uncomment this if not using an idle or refresh func
+//        //	glutPostRedisplay();
+//    }
+//}
+//
+//
+//void mouseWheel(int wheel, int direction, int x, int y) {
+//
+//    r += direction * 0.1f;
+//    if(r < 0.1f)
+//        r = 0.1f;
+//
+//    camX = r * sin(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);
+//    camZ = r * cos(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);
+//    camY = r * sin(beta * 3.14f / 180.0f);
+//
+//    cam.move_to(camX, camY, camZ);
+//
+//    //  uncomment this if not using an idle or refresh func
+//    //	glutPostRedisplay();
+//}
 
 // --------------------------------------------------------
 //
@@ -285,7 +366,7 @@ GLuint setupShaders() {
     cam.pvm_uniformId = glGetUniformLocation(shader.getProgramIndex(), "m_pvm");
     cam.vm_uniformId = glGetUniformLocation(shader.getProgramIndex(), "m_viewModel");
     cam.normal_uniformId = glGetUniformLocation(shader.getProgramIndex(), "m_normal");
-    //cam.lPos_uniformId = glGetUniformLocation(shader.getProgramIndex(), "l_pos");
+    cam.lPos_uniformId = glGetUniformLocation(shader.getProgramIndex(), "l_pos");
 
     printf("InfoLog for Per Fragment Phong Lightning Shader\n%s\n\n", shader.getAllInfoLogs().c_str());
 
@@ -299,9 +380,10 @@ GLuint setupShaders() {
 
 void init() {
     // set the camera position based on its spherical coordinates
-    /*camX = r * sin(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);
+    camX = r * sin(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);
     camZ = r * cos(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);
-    camY = r *   						     sin(beta * 3.14f / 180.0f);*/
+    camY = r *   						     sin(beta * 3.14f / 180.0f);
+	
 
     scene.prepare_scene();
 
@@ -339,14 +421,16 @@ int main(int argc, char** argv) {
     glutReshapeFunc(changeSize);
 
     glutTimerFunc(0, timer, 0);
-    glutIdleFunc(renderScene);  // Use it for maximum performance
-    //glutTimerFunc(0, refresh, 0);    //use it to to get 60 FPS whatever
+    //glutIdleFunc(renderScene);  // Use it for maximum performance
+    glutTimerFunc(0, refresh, 0);    //use it to to get 60 FPS whatever
 
 //	Mouse and Keyboard Callbacks
     glutKeyboardFunc(processKeys);
     glutKeyboardUpFunc(processKeysUp);
-    glutMouseFunc(processMouseButtons);
-    glutMotionFunc(processMouseMotion);
+   /* glutMouseFunc(processMouseButtons);
+    glutMotionFunc(processMouseMotion);*/
+
+
     //glutMouseWheelFunc ( mouseWheel ) ;
 
 //	return from main loop

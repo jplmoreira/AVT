@@ -41,6 +41,7 @@ void object::render(camera& cam, VSShaderLib& shader) {
     posx += dirx * delta * velocity;
     posy += diry * delta * velocity;
     posz += dirz * delta * velocity;
+	//printf("%lf\n", posx);
 
     pushMatrix(MODEL);
     translate(MODEL, dirx * delta * velocity,

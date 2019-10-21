@@ -4,12 +4,10 @@
 #include <memory>
 
 #include "object.hpp"
-#include "light.hpp"
 
 class scene_manager {
 public:
     std::vector<std::unique_ptr<object>> objs;
-    std::vector<std::unique_ptr<light>> lights;
 
     void prepare_scene();
     void player_forward();
@@ -18,4 +16,12 @@ public:
     void player_left();
     void player_stop();
     float* player_pos();
+	float* wood_pos();
+	void wood_move();
+	void wood_inverse_move();
+	void wood_stop();
+	float* river_pos();
+	float* road_pos();
+	bool collision();
+	float* aabb1_pos();
 };
