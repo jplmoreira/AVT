@@ -112,7 +112,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>$(SolutionDir)dependencies/freeglut/lib/;$(SolutionDir)dependencies/glew/lib/Release/$(Platform)/;$(SolutionDir)dependencies/assimp/lib/</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)dependencies/freeglut/lib/;$(SolutionDir)dependencies/glew/lib/Release/$(Platform)/;$(SolutionDir)dependencies/assimp/lib/$(Platform)/</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;freeglut.lib;glew32.lib;assimp-vc142-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
@@ -131,7 +131,7 @@ xcopy "$(SolutionDir)dependencies\glew\bin\Release\$(Platform)\*.dll" "$(OutputP
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>$(SolutionDir)dependencies/freeglut/lib/;$(SolutionDir)dependencies/glew/lib/Release/$(Platform)/;$(SolutionDir)dependencies/assimp/lib/</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)dependencies/freeglut/lib/;$(SolutionDir)dependencies/glew/lib/Release/$(Platform)/;$(SolutionDir)dependencies/assimp/lib/$(Platform)/</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;freeglut.lib;glew32.lib;assimp-vc142-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
@@ -154,7 +154,7 @@ xcopy "$(SolutionDir)dependencies\glew\bin\Release\$(Platform)\*.dll" "$(OutputP
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(SolutionDir)dependencies/freeglut/lib/;$(SolutionDir)dependencies/glew/lib/Release/$(Platform)/;$(SolutionDir)dependencies/assimp/lib/</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)dependencies/freeglut/lib/;$(SolutionDir)dependencies/glew/lib/Release/$(Platform)/;$(SolutionDir)dependencies/assimp/lib/$(Platform)/</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;freeglut.lib;glew32.lib;assimp-vc142-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
@@ -177,7 +177,7 @@ xcopy "$(SolutionDir)dependencies\glew\bin\Release\$(Platform)\*.dll" "$(OutputP
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(SolutionDir)dependencies/freeglut/lib/;$(SolutionDir)dependencies/glew/lib/Release/$(Platform)/;$(SolutionDir)dependencies/assimp/lib/</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)dependencies/freeglut/lib/;$(SolutionDir)dependencies/glew/lib/Release/$(Platform)/;$(SolutionDir)dependencies/assimp/lib/$(Platform)/</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;freeglut.lib;glew32.lib;assimp-vc142-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>

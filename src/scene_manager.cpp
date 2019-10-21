@@ -1,6 +1,6 @@
 #include "scene_manager.hpp"
 
-#include "spot_light.hpp"
+#include "point_light.hpp"
 #include "mesh.hpp"
 #include "basic_geometry.h"
 #include "AVTmathLib.h"
@@ -92,9 +92,9 @@ void scene_manager::prepare_scene() {
     // LIGHT CREATION
     int lightId = 0;
 
-    float pos[3] = { 1.0f, 1.0f, 0.0f };
-    float dir[3] = { -1.0f, 2.0f, 0.0f };  // something is wrong here
-    auto light = std::make_unique<spot_light>(lightId, true, pos, dir);
+    float pos[3] = { 4.0f, 6.0f, 2.0f };
+    //float dir[3] = { -1.0f, 2.0f, 0.0f };  // something is wrong here
+    auto light = std::make_unique<point_light>(lightId, true, pos);
     light->color[0] = 0.8f;
     light->color[1] = 0.8f;
     light->color[2] = 0.8f;
