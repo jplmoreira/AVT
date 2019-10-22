@@ -22,6 +22,4 @@ public:
 	void wood_stop();
 	float* river_pos();
 	float* road_pos();
-	bool collision();
-	float* aabb1_pos();
 };

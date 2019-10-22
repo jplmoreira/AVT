@@ -107,25 +107,54 @@ void stuff_moving() {
 }
 
 
-void avoid_stuff_forward() {
-	/*float* river = scene.river_pos();
-	float riverx = river[0];
-	int river_bis = (int)riverx;
+int i = 0;
+void aabb_collision(int i){
+	float* wood = scene.wood_pos();
+	float woody = wood[2];
+	int wood_bis_y = (int)woody;
 	float* player = scene.player_pos();
+	float playery = player[2];
 	float playerx = player[0];
-	printf("%i\n", river_bis);
-	int player_bis = (int)playerx;*/
-	//if (river_bis<player_bis) {
-		scene.player_forward();
-	//}
-	
+	int player_bis_x = (int)playerx;
+	int player_bis_y = (int)playery;
+	float* river = scene.river_pos();
+	float riverx = river[0];
+	float rivery = river[2];
+	int river_x = (int)riverx;
+	int river_y = (int)rivery;
+	float river_up_width = (float)8.700000;
+	float river_down_width = (float)1.200000;
+	float wood_length = (float)5.000000;
 
+	printf("%lf\n", playerx);
+
+
+if ((playerx >= riverx+ river_down_width && playerx <= riverx + river_up_width
+	&&(playery>woody+wood_length ||playery<woody-wood_length))
+	)
+{
+	scene.player_stop(); //die
 }
-
-void avoid_stuff_back() {
+else if (i==1)
+{
 	scene.player_back();
 }
 
+else if(i==0){
+	scene.player_forward();
+}
+
+
+//example aabb
+//if (player1.x < player2.x + player2.width &&
+//	player1.x + player1.width > player2.x&&
+//	player1.y < player2.y + player2.height &&
+//	player1.y + player1.height > player2.y)
+//{
+//	System.out.println("Collision Detected");
+//}
+	
+}
 
 
 void move_l_limits() {
@@ -215,10 +244,10 @@ void processKeys(unsigned char key, int xx, int yy) {
     }
     break;
     case 'q':
-		avoid_stuff_forward();
+		aabb_collision(0);
         break;
     case 'a':
-		avoid_stuff_back();
+		aabb_collision(1);
         break;
     case 'o':
 		move_l_limits();
