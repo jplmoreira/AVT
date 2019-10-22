@@ -1,6 +1,7 @@
 #include "scene_manager.hpp"
 
 #include "point_light.hpp"
+#include "spot_light.hpp"
 #include "mesh.hpp"
 #include "basic_geometry.h"
 #include "AVTmathLib.h"
@@ -15,101 +16,25 @@
 
 extern float mMatrix[COUNT_MATRICES][16];
 
+int light_id = 0;
+
 void scene_manager::prepare_scene() {
     // OBJECT CREATION
 	loadIdentity(MODEL);
 
-	float amb1[] = { 0.0f, 0.2f, 0.0f, 1.0f };
-	float diff1[] = { 0.0f, 0.8f, 0.1f, 1.0f };
-	float spec1[] = { 0.8f, 0.8f, 0.8f, 1.0f };
-	float emissive1[] = { 0.0f, 0.0f, 0.0f, 1.0f };
-	float shininess1 = 100.0f;
-	int texcount1 = 0;
-
-	material mat1;
-	memcpy(mat1.ambient, amb1, 4 * sizeof(float));
-	memcpy(mat1.diffuse, diff1, 4 * sizeof(float));
-	memcpy(mat1.specular, amb1, 4 * sizeof(float));
-	memcpy(mat1.emissive, amb1, 4 * sizeof(float));
-	mat1.shininess = shininess1;
-	mat1.texCount = texcount1;
-	mesh m1 = createSphere(2.0f, 5);
-	m1.mat = mat1;
-
-	pushMatrix(MODEL);
-	memcpy(m1.transform, mMatrix[MODEL], 16 * sizeof(float));
-	popMatrix(MODEL);
-
-	auto frog = std::make_unique<object>(m1);
-
-	float amb2[] = { 0.0f, 0.0f, 0.0f, 1.0f };
-	float diff2[] = { 0.0f, 0.0f, 0.0f, 1.0f };
-	float spec2[] = { 0.8f, 0.8f, 0.8f, 1.0f };
-
-	material mat2;
-	memcpy(mat2.ambient, amb2, 4 * sizeof(float));
-	memcpy(mat2.diffuse, diff2, 4 * sizeof(float));
-	memcpy(mat2.specular, spec2, 4 * sizeof(float));
-	memcpy(mat2.emissive, emissive1, 4 * sizeof(float));
-	mat2.shininess = shininess1;
-	mat2.texCount = texcount1;
-	mesh m2 = createSphere(0.5f, 3);
-	m2.mat = mat2;
-
-	pushMatrix(MODEL);
-	translate(MODEL, 1.2f, 1.2f, 1.2f);
-	memcpy(m2.transform, mMatrix[MODEL], 16 * sizeof(float));
-	popMatrix(MODEL);
-
-	auto r_eye = std::make_unique<object>(m2);
-
-	pushMatrix(MODEL);
-	translate(MODEL, 1.2f, 1.2f, -1.2f);
-	memcpy(m2.transform, mMatrix[MODEL], 16 * sizeof(float));
-	popMatrix(MODEL);
-
-	auto l_eye = std::make_unique<object>(m2);
-
-	frog->add_child(std::move(r_eye));
-	frog->add_child(std::move(l_eye));
-	objs.push_back(std::move(frog));
-
-	float amb3[] = { 0.0f, 0.0f, 0.0f, 1.0f };
-	float diff3[] = { 0.2f, 0.2f, 0.2f, 1.0f };
-	float spec3[] = { 0.8f, 0.8f, 0.8f, 1.0f };
-
-	material mat3;
-	memcpy(mat3.ambient, amb3, 4 * sizeof(float));
-	memcpy(mat3.diffuse, diff3, 4 * sizeof(float));
-	memcpy(mat3.specular, spec3, 4 * sizeof(float));
-	memcpy(mat3.emissive, emissive1, 4 * sizeof(float));
-	mat3.shininess = shininess1;
-	mat3.texCount = texcount1;
-	mesh m3 = createQuad(50.0f, 50.0f);
-	m3.mat = mat3;
-
-	pushMatrix(MODEL);
-	translate(MODEL, 0.0f, -2.0f, 0.0f);
-	rotate(MODEL, -90.0f, 1.0f, 0.0f, 0.0f);
-	memcpy(m3.transform, mMatrix[MODEL], 16 * sizeof(float));
-	popMatrix(MODEL);
-
-	auto floor = std::make_unique<object>(m3);
-	objs.push_back(std::move(floor));
+    create_frog();
+    for(int i = 0; i < 3; i++) {
+        create_floor(22.5f - 22.5f * i);
+    }
+    create_road();
+    create_water();
 
     // LIGHT CREATION
-    int lightId = 0;
-
-    float pos[3] = { 4.0f, 6.0f, 2.0f };
-    //float dir[3] = { -1.0f, 2.0f, 0.0f };  // something is wrong here
-    auto light = std::make_unique<point_light>(lightId, true, pos);
-    light->color[0] = 0.8f;
-    light->color[1] = 0.8f;
-    light->color[2] = 0.8f;
-
-    lights.push_back(std::move(light));
-
-    lightId++;
+    for(int i = 0; i < 2; i++) {
+        for(int j = 0; j < 3; j++) {
+            create_point(20.0f - i * 40.0f, 20.0f - j * 20.0f);
+        }
+    }
 }
 
 void scene_manager::player_forward() {
@@ -138,7 +63,148 @@ float* scene_manager::player_pos() {
 }
 
 void scene_manager::create_frog() {
-	loadIdentity(MODEL);
+
+    float amb[] = { 0.0f, 0.1f, 0.0f, 1.0f };
+    float diff[] = { 0.0f, 0.8f, 0.1f, 1.0f };
+    float spec[] = { 0.4f, 0.8f, 0.4f, 1.0f };
+    float emissive[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+    float shininess = 10.0f;
+    int texcount = 0;
+
+    material mat;
+    memcpy(mat.ambient, amb, 4 * sizeof(float));
+    memcpy(mat.diffuse, diff, 4 * sizeof(float));
+    memcpy(mat.specular, amb, 4 * sizeof(float));
+    memcpy(mat.emissive, amb, 4 * sizeof(float));
+    mat.shininess = shininess;
+    mat.texCount = texcount;
+    mesh m = createSphere(2.0f, 5);
+    m.mat = mat;
+
+    pushMatrix(MODEL);
+    memcpy(m.transform, mMatrix[MODEL], 16 * sizeof(float));
+    popMatrix(MODEL);
+
+    auto frog = std::make_unique<object>(m);
+
+    amb[1] = 0.0f;
+    diff[0] = 0.1f;
+    diff[1] = 0.1f;
+    spec[0] = 1.0f;
+    spec[1] = 1.0f;
+    spec[2] = 1.0f;
+    shininess = 100.0f;
+
+    memcpy(mat.ambient, amb, 4 * sizeof(float));
+    memcpy(mat.diffuse, diff, 4 * sizeof(float));
+    memcpy(mat.specular, spec, 4 * sizeof(float));
+    mat.shininess = shininess;
+    m = createSphere(0.5f, 3);
+    m.mat = mat;
+
+    pushMatrix(MODEL);
+    translate(MODEL, 1.2f, 1.2f, 1.2f);
+    memcpy(m.transform, mMatrix[MODEL], 16 * sizeof(float));
+    popMatrix(MODEL);
+
+    auto r_eye = std::make_unique<object>(m);
+
+    pushMatrix(MODEL);
+    translate(MODEL, 1.2f, 1.2f, -1.2f);
+    memcpy(m.transform, mMatrix[MODEL], 16 * sizeof(float));
+    popMatrix(MODEL);
+
+    auto l_eye = std::make_unique<object>(m);
+
+    frog->add_child(std::move(r_eye));
+    frog->add_child(std::move(l_eye));
+    objs.push_back(std::move(frog));
+}
+
+void scene_manager::create_floor(float offset) {
+    float amb[] = { 0.2f, 0.2f, 0.2f, 1.0f };
+    float diff[] = { 0.4f, 0.4f, 0.4f, 1.0f };
+    float spec[] = { 0.1f, 0.1f, 0.1f, 1.0f };
+    float emissive[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+    float shininess = 10.0f;
+    int texcount = 0;
+
+    material mat;
+    memcpy(mat.ambient, amb, 4 * sizeof(float));
+    memcpy(mat.diffuse, diff, 4 * sizeof(float));
+    memcpy(mat.specular, amb, 4 * sizeof(float));
+    memcpy(mat.emissive, amb, 4 * sizeof(float));
+    mat.shininess = shininess;
+    mat.texCount = texcount;
+    mesh m = createQuad(5.0f, 50.0f);
+    m.mat = mat;
+
+    pushMatrix(MODEL);
+    translate(MODEL, offset, -1.0f, 0.0f);
+    rotate(MODEL, -90.0f, 1.0f, 0.0f, 0.0f);
+    memcpy(m.transform, mMatrix[MODEL], 16 * sizeof(float));
+    popMatrix(MODEL);
+
+    auto floor = std::make_unique<object>(m);
+    objs.push_back(std::move(floor));
+}
+
+void scene_manager::create_road() {
+    float amb[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+    float diff[] = { 0.1f, 0.1f, 0.1f, 1.0f };
+    float spec[] = { 0.15f, 0.15f, 0.15f, 1.0f };
+    float emissive[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+    float shininess = 10.0f;
+    int texcount = 0;
+
+    material mat;
+    memcpy(mat.ambient, amb, 4 * sizeof(float));
+    memcpy(mat.diffuse, diff, 4 * sizeof(float));
+    memcpy(mat.specular, amb, 4 * sizeof(float));
+    memcpy(mat.emissive, amb, 4 * sizeof(float));
+    mat.shininess = shininess;
+    mat.texCount = texcount;
+    mesh m = createQuad(17.5f, 50.0f);
+    m.mat = mat;
+
+    pushMatrix(MODEL);
+    translate(MODEL, -11.25, -1.0f, 0.0f);
+    rotate(MODEL, -90.0f, 1.0f, 0.0f, 0.0f);
+    memcpy(m.transform, mMatrix[MODEL], 16 * sizeof(float));
+    popMatrix(MODEL);
+
+    auto road = std::make_unique<object>(m);
+    objs.push_back(std::move(road));
+}
+
+void scene_manager::create_water() {
+    float amb[] = { 0.0f, 0.0f, 0.2f, 1.0f };
+    float diff[] = { 0.0f, 0.0f, 1.0f, 1.0f };
+    float spec[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+    float shininess = 100.0f;
+    int texcount = 0;
+
+    material mat;
+    memcpy(mat.ambient, amb, 4 * sizeof(float));
+    memcpy(mat.diffuse, diff, 4 * sizeof(float));
+    memcpy(mat.specular, amb, 4 * sizeof(float));
+    memcpy(mat.emissive, amb, 4 * sizeof(float));
+    mat.shininess = shininess;
+    mat.texCount = texcount;
+    mesh m = createQuad(17.5f, 50.0f);
+    m.mat = mat;
+
+    pushMatrix(MODEL);
+    translate(MODEL, 11.25, -1.0f, 0.0f);
+    rotate(MODEL, -90.0f, 1.0f, 0.0f, 0.0f);
+    memcpy(m.transform, mMatrix[MODEL], 16 * sizeof(float));
+    popMatrix(MODEL);
+
+    auto water = std::make_unique<object>(m);
+    objs.push_back(std::move(water));
+}
+
+void scene_manager::create_frog_ai() {
 
 	Assimp::Importer importer;
 
@@ -226,12 +292,13 @@ void scene_manager::create_frog() {
 	// buffer for vertex texture coordinates
 	if (m->HasTextureCoords(0)) {
 		float* texCoords = (float*)malloc(sizeof(float) * 2 * m->mNumVertices);
-		for (unsigned int k = 0; k < m->mNumVertices; ++k) {
+        if(texCoords) {
+            for(unsigned int k = 0; k < m->mNumVertices; ++k) {
 
-			texCoords[k * 2] = m->mTextureCoords[0][k].x;
-			texCoords[k * 2 + 1] = m->mTextureCoords[0][k].y;
-
-		}
+                texCoords[k * 2] = m->mTextureCoords[0][k].x;
+                texCoords[k * 2 + 1] = m->mTextureCoords[0][k].y;
+            }
+        }
 		glGenBuffers(1, &buffer);
 		glBindBuffer(GL_ARRAY_BUFFER, buffer);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 2 * m->mNumVertices, texCoords, GL_STATIC_DRAW);
@@ -251,4 +318,27 @@ void scene_manager::create_frog() {
 	popMatrix(MODEL);
 	auto o1 = std::make_unique<object>(frog);
 	objs.push_back(std::move(o1));
+}
+
+void scene_manager::create_point(float off_x, float off_z) {
+    float pos[3] = { off_x, 6.0f, off_z };
+    auto light = std::make_unique<point_light>(light_id, true, pos);
+    light->color[0] = 0.8f;
+    light->color[1] = 0.8f;
+    light->color[2] = 0.2f;
+
+    lights.push_back(std::move(light));
+    light_id++;
+}
+
+void scene_manager::create_spot() {
+    float pos[3] = { 1.0f, 1.0f, 0.0f };
+    float dir[3] = { -1.0f, 2.0f, 0.0f };  // something is wrong here
+    auto light = std::make_unique<spot_light>(light_id, true, pos, dir);
+    light->color[0] = 0.8f;
+    light->color[1] = 0.8f;
+    light->color[2] = 0.8f;
+
+    lights.push_back(std::move(light));
+    light_id++;
 }

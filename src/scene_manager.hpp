@@ -18,5 +18,15 @@ public:
     void player_left();
     void player_stop();
     float* player_pos();
-	void create_frog();
+
+private:
+    void create_frog();
+    void create_floor(float offset);
+    void create_road();
+    void create_water();
+
+	void create_frog_ai();
+
+    void create_point(float off_x, float off_z);
+    void create_spot();
 };
