@@ -331,3 +331,6 @@ ASALocalRun/
 
 # Ignore dependencies folders and subfolders
 !dependencies/**
+
+# Ignore obj files in the models folder
+!models/**
