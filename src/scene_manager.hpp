@@ -18,4 +18,5 @@ public:
     void player_left();
     void player_stop();
     float* player_pos();
+	void create_frog();
 };
