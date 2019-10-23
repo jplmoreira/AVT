@@ -16,9 +16,9 @@ public:
         this->position[2] = pos[2];
         spot_cutoff = 0.0f;
         spot_exponent = 0.0f;
-        constant_attenuation = 0.2f;
-        linear_attenuation = 0.1f;
-        quadratic_attenuation = 0.05f;
+        constant_attenuation = 0.1f;
+        linear_attenuation = 0.05f;
+        quadratic_attenuation = 0.01f;
     }
 
     virtual void setup(GLuint program, float *player);

@@ -53,11 +53,7 @@ void main() {
             float distance = length(light_dir);
             light_dir = normalize(light_dir);
 
-            attenuation = 1.0 /
-                (lights[l].constant_attenuation +
-                lights[l].linear_attenuation * distance +
-                lights[l].quadratic_attenuation * distance
-                                                * distance);
+            attenuation = 1.0;
 
             if (lights[l].is_spot) {
                 float spot_cos = dot(light_dir, -normalize(lights[l].direction));
@@ -71,18 +67,18 @@ void main() {
         } else
             light_dir = normalize(light_dir);
 
-        float diffuse = max(dot(light_dir, DataIn.normal), 0.0);
+        float itensity = max(dot(light_dir, DataIn.normal), 0.0);
         float specular = 0.0;
 
-        if (diffuse > 0.0) {
-            vec3 view = normalize(DataIn.eye - DataIn.o_pos);
+        if (itensity > 0.0) {
+            vec3 view = normalize(-DataIn.o_pos);
             vec3 half_v = normalize(light_dir + view);
             float spec_angle = max(dot(DataIn.normal, half_v), 0.0);
             specular = pow(spec_angle, mat.shininess);
         }
 
         scattered += lights[l].color * mat.ambient.rgb * attenuation +
-                lights[l].color * mat.diffuse.rgb * diffuse * attenuation;
+                lights[l].color * mat.diffuse.rgb * itensity * attenuation;
 
         reflected += specular * mat.specular.rgb * lights[l].color * attenuation;
     }

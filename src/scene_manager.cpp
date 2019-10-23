@@ -118,10 +118,12 @@ void scene_manager::create_frog() {
     m.mat = mat;
 
     pushMatrix(MODEL);
+    translate(MODEL, -22.0f, 0.0f, 0.0f);
     memcpy(m.transform, mMatrix[MODEL], 16 * sizeof(float));
     popMatrix(MODEL);
 
     auto frog = std::make_unique<object>(m);
+    frog->posx = -22.0f;
 
     amb[1] = 0.0f;
     diff[0] = 0.1f;
@@ -439,7 +441,7 @@ void scene_manager::create_point(float off_x, float off_z) {
 
 void scene_manager::create_spot() {
     float pos[3] = { 1.0f, 1.0f, 0.0f };
-    float dir[3] = { 2.0f, -1.0f, 0.0f };  // something is wrong here
+    float dir[3] = { 0.0f, 1.0f, 0.0f };  // something is wrong here
     auto light = std::make_unique<spot_light>(light_id, true, pos, dir);
     light->color[0] = 0.8f;
     light->color[1] = 0.8f;
@@ -452,9 +454,9 @@ void scene_manager::create_spot() {
 void scene_manager::create_dir() {
     float dir[3] = { -1.0f, -1.0f, -1.0f };
     auto light = std::make_unique<dir_light>(light_id, true, dir);
-    light->color[0] = 0.2f;
-    light->color[1] = 0.2f;
-    light->color[2] = 0.2f;
+    light->color[0] = 1.0f;
+    light->color[1] = 1.0f;
+    light->color[2] = 1.0f;
 
     lights.push_back(std::move(light));
     light_id++;
