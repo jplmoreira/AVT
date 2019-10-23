@@ -149,7 +149,10 @@ void processKeys(unsigned char key, int xx, int yy) {
         scene.player_right();
         break;
     case 'c':
-        printf("Camera Spherical Coordinates (%f, %f, %f)\n", alpha, beta, r);
+        scene.toggle_points();
+        break;
+    case 'h':
+        scene.toggle_spot();
         break;
     case 'm': glEnable(GL_MULTISAMPLE); break;
     case 'n': glDisable(GL_MULTISAMPLE); break;

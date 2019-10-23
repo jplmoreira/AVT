@@ -18,15 +18,20 @@ public:
     void player_left();
     void player_stop();
     float* player_pos();
+    void toggle_spot();
+    void toggle_points();
 
 private:
     void create_frog();
     void create_floor(float offset);
     void create_road();
     void create_water();
+    void create_car(float x, float y, float dirz);
+    void create_log(float x, float y, float dirz);
 
 	void create_frog_ai();
 
     void create_point(float off_x, float off_z);
     void create_spot();
+    void create_dir();
 };

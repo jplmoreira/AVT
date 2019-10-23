@@ -2,6 +2,7 @@
 
 #include "point_light.hpp"
 #include "spot_light.hpp"
+#include "dir_light.hpp"
 #include "mesh.hpp"
 #include "basic_geometry.h"
 #include "AVTmathLib.h"
@@ -29,12 +30,37 @@ void scene_manager::prepare_scene() {
     create_road();
     create_water();
 
+    create_car(-18.5f, -24.0f, 1.0f);
+    create_car(-18.5f, -4.0f, 1.0f);
+    create_car(-12.5f, 20.0f, -1.0f);
+    create_car(-12.5f, 0.0f, -1.0f);
+    create_car(-6.5f, -14.0f, 1.0f);
+    create_car(-6.5f, 4.0f, 1.0f);
+
+    create_log(2.5f, -25.0f, 0.5f);
+    create_log(2.5f, -9.5f, 0.5f);
+    create_log(2.5f, 6.0f, 0.5f);
+    create_log(6.0f, 21.5f, -0.5f);
+    create_log(6.0f, 6.0f, -0.5f);
+    create_log(6.0f, -9.5f, -0.5f);
+    create_log(9.5f, -25.0f, 0.5f);
+    create_log(9.5f, -9.5f, 0.5f);
+    create_log(9.5f, 6.0f, 0.5f);
+    create_log(13.0f, 21.5f, -0.5f);
+    create_log(13.0f, 6.0f, -0.5f);
+    create_log(13.0f, -9.5f, -0.5f);
+    create_log(16.5f, -25.0f, 0.5f);
+    create_log(16.5f, -9.5f, 0.5f);
+    create_log(16.5f, 6.0f, 0.5f);
+
     // LIGHT CREATION
+    create_spot();
     for(int i = 0; i < 2; i++) {
         for(int j = 0; j < 3; j++) {
             create_point(20.0f - i * 40.0f, 20.0f - j * 20.0f);
         }
     }
+    create_dir();
 }
 
 void scene_manager::player_forward() {
@@ -60,6 +86,16 @@ void scene_manager::player_stop() {
 float* scene_manager::player_pos() {
     float pos[3] = { objs[0]->posx, objs[0]->posy, objs[0]->posz };
     return pos;
+}
+
+void scene_manager::toggle_spot() {
+    lights[0]->is_enabled = !lights[0]->is_enabled;
+}
+
+void scene_manager::toggle_points() {
+    for(int i = 1; i < 7; i++) {
+        lights[i]->is_enabled = !lights[i]->is_enabled;
+    }
 }
 
 void scene_manager::create_frog() {
@@ -118,6 +154,7 @@ void scene_manager::create_frog() {
 
     frog->add_child(std::move(r_eye));
     frog->add_child(std::move(l_eye));
+    frog->set_limits(24.0f, -24.0f, 24.0f, -24.0f);
     objs.push_back(std::move(frog));
 }
 
@@ -133,7 +170,7 @@ void scene_manager::create_floor(float offset) {
     memcpy(mat.ambient, amb, 4 * sizeof(float));
     memcpy(mat.diffuse, diff, 4 * sizeof(float));
     memcpy(mat.specular, amb, 4 * sizeof(float));
-    memcpy(mat.emissive, amb, 4 * sizeof(float));
+    memcpy(mat.emissive, emissive, 4 * sizeof(float));
     mat.shininess = shininess;
     mat.texCount = texcount;
     mesh m = createQuad(5.0f, 50.0f);
@@ -161,7 +198,7 @@ void scene_manager::create_road() {
     memcpy(mat.ambient, amb, 4 * sizeof(float));
     memcpy(mat.diffuse, diff, 4 * sizeof(float));
     memcpy(mat.specular, amb, 4 * sizeof(float));
-    memcpy(mat.emissive, amb, 4 * sizeof(float));
+    memcpy(mat.emissive, emissive, 4 * sizeof(float));
     mat.shininess = shininess;
     mat.texCount = texcount;
     mesh m = createQuad(17.5f, 50.0f);
@@ -181,6 +218,7 @@ void scene_manager::create_water() {
     float amb[] = { 0.0f, 0.0f, 0.2f, 1.0f };
     float diff[] = { 0.0f, 0.0f, 1.0f, 1.0f };
     float spec[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+    float emissive[] = { 0.0f, 0.0f, 0.0f, 1.0f };
     float shininess = 100.0f;
     int texcount = 0;
 
@@ -188,7 +226,7 @@ void scene_manager::create_water() {
     memcpy(mat.ambient, amb, 4 * sizeof(float));
     memcpy(mat.diffuse, diff, 4 * sizeof(float));
     memcpy(mat.specular, amb, 4 * sizeof(float));
-    memcpy(mat.emissive, amb, 4 * sizeof(float));
+    memcpy(mat.emissive, emissive, 4 * sizeof(float));
     mat.shininess = shininess;
     mat.texCount = texcount;
     mesh m = createQuad(17.5f, 50.0f);
@@ -202,6 +240,74 @@ void scene_manager::create_water() {
 
     auto water = std::make_unique<object>(m);
     objs.push_back(std::move(water));
+}
+
+void scene_manager::create_car(float x, float y, float dirz) {
+    float amb[] = { 0.2f, 0.0f, 0.0f, 1.0f };
+    float diff[] = { 0.8f, 0.0f, 0.0f, 1.0f };
+    float spec[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+    float emissive[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+    float shininess = 50.0f;
+    int texcount = 0;
+
+    material mat;
+    memcpy(mat.ambient, amb, 4 * sizeof(float));
+    memcpy(mat.diffuse, diff, 4 * sizeof(float));
+    memcpy(mat.specular, amb, 4 * sizeof(float));
+    memcpy(mat.emissive, emissive, 4 * sizeof(float));
+    mat.shininess = shininess;
+    mat.texCount = texcount;
+    mesh m = createCube();
+    m.mat = mat;
+
+    pushMatrix(MODEL);
+    translate(MODEL, x, -1.0f, y);
+    scale(MODEL, 3.0f, 2.5f, 5.0f);
+    memcpy(m.transform, mMatrix[MODEL], 16 * sizeof(float));
+    popMatrix(MODEL);
+
+    auto car = std::make_unique<object>(m);
+    car->posx = x;
+    car->posy = -1.0f;
+    car->posz = y;
+    car->move(0.0f, 0.0f, dirz);
+    car->loop(true);
+    car->set_limits(100.0f, -100.0f, 20.0f, -25.0f);
+    objs.push_back(std::move(car));
+}
+
+void scene_manager::create_log(float x, float y, float dirz) {
+    float amb[] = { 0.2f, 0.1f, 0.0f, 1.0f };
+    float diff[] = { 0.5f, 0.25f, 0.1f, 1.0f };
+    float spec[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+    float emissive[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+    float shininess = 50.0f;
+    int texcount = 0;
+
+    material mat;
+    memcpy(mat.ambient, amb, 4 * sizeof(float));
+    memcpy(mat.diffuse, diff, 4 * sizeof(float));
+    memcpy(mat.specular, amb, 4 * sizeof(float));
+    memcpy(mat.emissive, emissive, 4 * sizeof(float));
+    mat.shininess = shininess;
+    mat.texCount = texcount;
+    mesh m = createCube();
+    m.mat = mat;
+
+    pushMatrix(MODEL);
+    translate(MODEL, x, -3.0f, y);
+    scale(MODEL, 3.5f, 2.5f, 5.0f);
+    memcpy(m.transform, mMatrix[MODEL], 16 * sizeof(float));
+    popMatrix(MODEL);
+
+    auto log = std::make_unique<object>(m);
+    log->posx = x;
+    log->posy = -1.0f;
+    log->posz = y;
+    log->move(0.0f, 0.0f, dirz);
+    log->loop(true);
+    log->set_limits(100.0f, -100.0f, 20.0f, -25.0f);
+    objs.push_back(std::move(log));
 }
 
 void scene_manager::create_frog_ai() {
@@ -333,11 +439,22 @@ void scene_manager::create_point(float off_x, float off_z) {
 
 void scene_manager::create_spot() {
     float pos[3] = { 1.0f, 1.0f, 0.0f };
-    float dir[3] = { -1.0f, 2.0f, 0.0f };  // something is wrong here
+    float dir[3] = { 2.0f, -1.0f, 0.0f };  // something is wrong here
     auto light = std::make_unique<spot_light>(light_id, true, pos, dir);
     light->color[0] = 0.8f;
     light->color[1] = 0.8f;
     light->color[2] = 0.8f;
+
+    lights.push_back(std::move(light));
+    light_id++;
+}
+
+void scene_manager::create_dir() {
+    float dir[3] = { -1.0f, -1.0f, -1.0f };
+    auto light = std::make_unique<dir_light>(light_id, true, dir);
+    light->color[0] = 0.2f;
+    light->color[1] = 0.2f;
+    light->color[2] = 0.2f;
 
     lights.push_back(std::move(light));
     light_id++;

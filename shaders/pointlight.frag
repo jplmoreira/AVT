@@ -25,7 +25,7 @@ struct Materials {
 	int texCount;
 };
 
-const int MAXLIGHTS = 1;
+const int MAXLIGHTS = 8;
 uniform light_p lights[MAXLIGHTS];
 
 uniform Materials mat;
@@ -46,7 +46,7 @@ void main() {
         if (!lights[l].is_enabled) continue;
 
         vec3 light_dir = lights[l].position;
-        float attenuation = 0.5;
+        float attenuation = 1.0;
 
         if (lights[l].is_local) {
             light_dir -= DataIn.o_pos;
@@ -60,7 +60,7 @@ void main() {
                                                 * distance);
 
             if (lights[l].is_spot) {
-                float spot_cos = dot(light_dir, -lights[l].direction);
+                float spot_cos = dot(light_dir, -normalize(lights[l].direction));
 
                 if (spot_cos < lights[l].spot_cutoff)
                     attenuation = 0.0;
@@ -81,12 +81,12 @@ void main() {
             specular = pow(spec_angle, mat.shininess);
         }
 
-        scattered += mat.ambient.rgb +
-                    diffuse * mat.diffuse.rgb * lights[l].color * attenuation;
+        scattered += lights[l].color * mat.ambient.rgb * attenuation +
+                lights[l].color * mat.diffuse.rgb * diffuse * attenuation;
 
         reflected += specular * mat.specular.rgb * lights[l].color * attenuation;
     }
-    vec3 res = min(vec3(1.0), scattered + reflected);
+    vec3 res = min(mat.emissive.rgb + mat.diffuse.rgb * scattered + reflected, vec3(1.0));
 	
 	colorOut = vec4(res, 1.0);
 }
