@@ -16,7 +16,7 @@ typedef struct tImageTGA
 
 void TGA_Texture(unsigned int *textureArray, const char *strFileName, int ID);
 
-tImageTGA *Load_TGA(char *filename);
+tImageTGA *Load_TGA(const char *filename);
 
 
 
