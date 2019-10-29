@@ -30,6 +30,7 @@
     <ClInclude Include="src\point_light.hpp" />
     <ClInclude Include="src\scene_manager.hpp" />
     <ClInclude Include="src\spot_light.hpp" />
+    <ClInclude Include="src\TGA.h" />
     <ClInclude Include="src\VertexAttrDef.h" />
     <ClInclude Include="src\vsShaderLib.h" />
   </ItemGroup>
@@ -43,11 +44,15 @@
     <ClCompile Include="src\point_light.cpp" />
     <ClCompile Include="src\scene_manager.cpp" />
     <ClCompile Include="src\spot_light.cpp" />
+    <ClCompile Include="src\stencil.cpp" />
+    <ClCompile Include="src\TGA.cpp" />
     <ClCompile Include="src\vsShaderLib.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\pointlight.frag" />
     <None Include="shaders\pointlight.vert" />
+    <None Include="shaders\texture_demo.frag" />
+    <None Include="shaders\texture_demo.vert" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

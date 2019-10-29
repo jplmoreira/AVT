@@ -54,6 +54,9 @@
     <ClInclude Include="src\spot_light.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\TGA.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AVTmathLib.cpp">
@@ -86,12 +89,24 @@
     <ClCompile Include="src\spot_light.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\stencil.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TGA.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\pointlight.frag">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="shaders\pointlight.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="shaders\texture_demo.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="shaders\texture_demo.vert">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

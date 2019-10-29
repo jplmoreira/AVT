@@ -1,3 +1,4 @@
+
 /// Types of Vertex Attributes
 	enum AttribType {
 		VERTEX_COORD_ATTRIB,

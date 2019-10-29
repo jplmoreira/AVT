@@ -39,7 +39,6 @@
 #include <GL/glew.h>
 
 
-
 class VSShaderLib
 {
 public:
