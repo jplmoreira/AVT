@@ -122,7 +122,7 @@ void scene_manager::create_frog() {
     memcpy(m.transform, mMatrix[MODEL], 16 * sizeof(float));
     popMatrix(MODEL);
 
-    auto frog = std::make_unique<object>(m);
+    auto frog = std::make_shared<object>(m);
     frog->posx = -22.0f;
 
     amb[1] = 0.0f;
@@ -145,14 +145,14 @@ void scene_manager::create_frog() {
     memcpy(m.transform, mMatrix[MODEL], 16 * sizeof(float));
     popMatrix(MODEL);
 
-    auto r_eye = std::make_unique<object>(m);
+    auto r_eye = std::make_shared<object>(m);
 
     pushMatrix(MODEL);
     translate(MODEL, 1.2f, 1.2f, -1.2f);
     memcpy(m.transform, mMatrix[MODEL], 16 * sizeof(float));
     popMatrix(MODEL);
 
-    auto l_eye = std::make_unique<object>(m);
+    auto l_eye = std::make_shared<object>(m);
 
     frog->add_child(std::move(r_eye));
     frog->add_child(std::move(l_eye));
@@ -184,7 +184,7 @@ void scene_manager::create_floor(float offset) {
     memcpy(m.transform, mMatrix[MODEL], 16 * sizeof(float));
     popMatrix(MODEL);
 
-    auto floor = std::make_unique<object>(m);
+    auto floor = std::make_shared<object>(m);
     objs.push_back(std::move(floor));
 }
 
@@ -212,7 +212,7 @@ void scene_manager::create_road() {
     memcpy(m.transform, mMatrix[MODEL], 16 * sizeof(float));
     popMatrix(MODEL);
 
-    auto road = std::make_unique<object>(m);
+    auto road = std::make_shared<object>(m);
     objs.push_back(std::move(road));
 }
 
@@ -240,7 +240,7 @@ void scene_manager::create_water() {
     memcpy(m.transform, mMatrix[MODEL], 16 * sizeof(float));
     popMatrix(MODEL);
 
-    auto water = std::make_unique<object>(m);
+    auto water = std::make_shared<object>(m);
     objs.push_back(std::move(water));
 }
 
@@ -268,13 +268,14 @@ void scene_manager::create_car(float x, float y, float dirz) {
     memcpy(m.transform, mMatrix[MODEL], 16 * sizeof(float));
     popMatrix(MODEL);
 
-    auto car = std::make_unique<object>(m);
+    auto car = std::make_shared<object>(m);
     car->posx = x;
     car->posy = -1.0f;
     car->posz = y;
     car->move(0.0f, 0.0f, dirz);
     car->loop(true);
     car->set_limits(100.0f, -100.0f, 20.0f, -25.0f);
+    car->stencil_func = GL_NOTEQUAL;
     objs.push_back(std::move(car));
 }
 
@@ -302,13 +303,14 @@ void scene_manager::create_log(float x, float y, float dirz) {
     memcpy(m.transform, mMatrix[MODEL], 16 * sizeof(float));
     popMatrix(MODEL);
 
-    auto log = std::make_unique<object>(m);
+    auto log = std::make_shared<object>(m);
     log->posx = x;
     log->posy = -1.0f;
     log->posz = y;
     log->move(0.0f, 0.0f, dirz);
     log->loop(true);
     log->set_limits(100.0f, -100.0f, 20.0f, -25.0f);
+    log->stencil_func = GL_NOTEQUAL;
     objs.push_back(std::move(log));
 }
 
@@ -424,13 +426,13 @@ void scene_manager::create_frog_ai() {
 	pushMatrix(MODEL);
 	memcpy(frog.transform, mMatrix[MODEL], 16 * sizeof(float));
 	popMatrix(MODEL);
-	auto o1 = std::make_unique<object>(frog);
+	auto o1 = std::make_shared<object>(frog);
 	objs.push_back(std::move(o1));
 }
 
 void scene_manager::create_point(float off_x, float off_z) {
     float pos[3] = { off_x, 6.0f, off_z };
-    auto light = std::make_unique<point_light>(light_id, true, pos);
+    auto light = std::make_shared<point_light>(light_id, true, pos);
     light->color[0] = 0.8f;
     light->color[1] = 0.8f;
     light->color[2] = 0.2f;
@@ -442,7 +444,7 @@ void scene_manager::create_point(float off_x, float off_z) {
 void scene_manager::create_spot() {
     float pos[3] = { 1.0f, 1.0f, 0.0f };
     float dir[3] = { 0.0f, 1.0f, 0.0f };  // something is wrong here
-    auto light = std::make_unique<spot_light>(light_id, true, pos, dir);
+    auto light = std::make_shared<spot_light>(light_id, true, pos, dir);
     light->color[0] = 0.8f;
     light->color[1] = 0.8f;
     light->color[2] = 0.8f;
@@ -453,7 +455,7 @@ void scene_manager::create_spot() {
 
 void scene_manager::create_dir() {
     float dir[3] = { -1.0f, -1.0f, -1.0f };
-    auto light = std::make_unique<dir_light>(light_id, true, dir);
+    auto light = std::make_shared<dir_light>(light_id, true, dir);
     light->color[0] = 1.0f;
     light->color[1] = 1.0f;
     light->color[2] = 1.0f;

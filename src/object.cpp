@@ -18,7 +18,9 @@ object::object(mesh m) :
     limit_upz(std::numeric_limits<float>::max()),
     limit_dz(std::numeric_limits<float>::min()) {}
 
-void object::add_child(std::unique_ptr<object> obj) {
+object::object() {}
+
+void object::add_child(std::shared_ptr<object> obj) {
     child_objs.push_back(std::move(obj));
 }
 
@@ -125,6 +127,9 @@ void object::render(camera& cam, VSShaderLib& shader) {
     glUniformMatrix4fv(cam.pvm_uniformId, 1, GL_FALSE, mCompMatrix[PROJ_VIEW_MODEL]);
     computeNormalMatrix3x3();
     glUniformMatrix3fv(cam.normal_uniformId, 1, GL_FALSE, mNormal3x3);
+
+    // stencil test func
+    glStencilFunc(stencil_func, 0x1, 0x1);
 
     // Render mesh
     glBindVertexArray(obj_mesh.vao);

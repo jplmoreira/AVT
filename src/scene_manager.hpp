@@ -8,8 +8,8 @@
 
 class scene_manager {
 public:
-    std::vector<std::unique_ptr<object>> objs;
-    std::vector<std::unique_ptr<light>> lights;
+    std::vector<std::shared_ptr<object>> objs;
+    std::vector<std::shared_ptr<light>> lights;
 
     void prepare_scene();
     void player_forward();

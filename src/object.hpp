@@ -14,7 +14,7 @@ class object {
     mesh obj_mesh;
     float dirx, diry, dirz;
     float velocity;
-    std::vector<std::unique_ptr<object>> child_objs;
+    std::vector<std::shared_ptr<object>> child_objs;
     std::chrono::time_point<std::chrono::system_clock> last, current;
     bool looping;
     float limit_upx, limit_dx;
@@ -22,8 +22,9 @@ class object {
 
 public:
     object(mesh m);
+    object();
 
-    void add_child(std::unique_ptr<object> obj);
+    void add_child(std::shared_ptr<object> obj);
     bool is_looping();
     void loop(bool l);
     void set_limits(float ux, float dx, float uz, float dz);
@@ -36,4 +37,5 @@ public:
     float posx = 0.0f;
     float posy = 0.0f;
     float posz = 0.0f;
+    int stencil_func = GL_ALWAYS;
 };

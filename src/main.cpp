@@ -25,14 +25,10 @@ float camX = 0.0f, camY = 50.0f, camZ = 0.0f;
 float upX = 1.0f, upY = 0.0f, upZ = 0.0f;
 float atX = 0.0f, atY = 0.0f, atZ = 0.0f;
 
-camera cam = camera(WinX, WinY, fov, camX, camY, camZ, upX, upY, upZ, atX, atY, atZ);
+camera cam;
 
 scene_manager scene;
 VSShaderLib shader;
-
-struct mesh mesh[4];
-const int objLen = 4;
-int objId = 0; //id of the object mesh - to be used as index of mesh: mesh[objID] means the current mesh
 
 /// The storage for matrices
 extern float mMatrix[COUNT_MATRICES][16];
@@ -80,7 +76,7 @@ void changeSize(int w, int h) {
     // set the viewport to be the entire window
     glViewport(0, 0, w, h);
     // set the projection matrix
-    cam.resize(w, h);
+    cam.resize(w, h, shader);
 }
 
 
@@ -313,7 +309,8 @@ void init() {
     glEnable(GL_CULL_FACE);
     glEnable(GL_MULTISAMPLE);
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-
+    glClearStencil(0x0);
+    glEnable(GL_STENCIL_TEST);
 }
 
 
@@ -327,7 +324,7 @@ int main(int argc, char** argv) {
 
     //  GLUT initialization
     glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA | GLUT_MULTISAMPLE);
+    glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA | GLUT_STENCIL | GLUT_MULTISAMPLE);
 
     glutInitContextVersion(3, 3);
     glutInitContextProfile(GLUT_CORE_PROFILE);
@@ -363,6 +360,17 @@ int main(int argc, char** argv) {
     printf("Renderer: %s\n", glGetString(GL_RENDERER));
     printf("Version: %s\n", glGetString(GL_VERSION));
     printf("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+
+    mesh m = createCube();
+    pushMatrix(MODEL);
+    loadIdentity(MODEL);
+    scale(MODEL, 2.0f, 2.0f, 2.0f);
+    rotate(MODEL, 45.0f, 0.0, 0.0, 1.0);
+    translate(MODEL, -0.5f, -0.5f, -0.5f);
+    memcpy(m.transform, mMatrix[MODEL], 16 * sizeof(float));
+    popMatrix(MODEL);
+    object stencil(m);
+    cam = camera(WinX, WinY, fov, camX, camY, camZ, upX, upY, upZ, atX, atY, atZ, stencil);
 
     if(!setupShaders())
         return(1);
