@@ -433,9 +433,6 @@ void scene_manager::create_frog_ai() {
 void scene_manager::create_point(float off_x, float off_z) {
     float pos[3] = { off_x, 6.0f, off_z };
     auto light = std::make_shared<point_light>(light_id, true, pos);
-    light->color[0] = 0.8f;
-    light->color[1] = 0.8f;
-    light->color[2] = 0.2f;
 
     lights.push_back(std::move(light));
     light_id++;
@@ -444,10 +441,7 @@ void scene_manager::create_point(float off_x, float off_z) {
 void scene_manager::create_spot() {
     float pos[3] = { 1.0f, 1.0f, 0.0f };
     float dir[3] = { 0.0f, 1.0f, 0.0f };  // something is wrong here
-    auto light = std::make_shared<spot_light>(light_id, true, pos, dir);
-    light->color[0] = 0.8f;
-    light->color[1] = 0.8f;
-    light->color[2] = 0.8f;
+    auto light = std::make_shared<spot_light>(light_id, true, pos, dir, 30.0f);
 
     lights.push_back(std::move(light));
     light_id++;
@@ -456,9 +450,6 @@ void scene_manager::create_spot() {
 void scene_manager::create_dir() {
     float dir[3] = { -1.0f, -1.0f, -1.0f };
     auto light = std::make_shared<dir_light>(light_id, true, dir);
-    light->color[0] = 1.0f;
-    light->color[1] = 1.0f;
-    light->color[2] = 1.0f;
 
     lights.push_back(std::move(light));
     light_id++;

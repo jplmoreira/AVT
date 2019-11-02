@@ -9,7 +9,7 @@ const double pi = std::acos(-1);
 struct spot_light : public light {
 
 public:
-    spot_light(int i, bool enabled, float pos[3], float dir[3]) {
+    spot_light(int i, bool enabled, float pos[3], float dir[3], float angle) {
         id = i;
         is_enabled = enabled;
         is_local = true;
@@ -20,11 +20,7 @@ public:
         this->dir[0] = dir[0];
         this->dir[1] = dir[1];
         this->dir[2] = dir[2];
-        spot_cutoff = 0.0f;
-        spot_exponent = 20.0f;
-        constant_attenuation = 0.5f;
-        linear_attenuation = 0.0f;
-        quadratic_attenuation = 0.0f;
+        spot_cutoff = angle * pi / 180.0f;
     }
 
     virtual void setup(GLuint program, float* player);
